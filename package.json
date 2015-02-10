@@ -1,0 +1,25 @@
+{
+  "name": "faux-jax",
+  "version": "1.0.0",
+  "description": "A fake (mock) XMLHttpRequest implementation",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint --quiet .",
+    "dev": "zuul --local 8080 --ui tape test/*.js"
+  },
+  "keywords": [
+    "xhr",
+    "XMLHttpRequest",
+    "fake",
+    "mock",
+    "testing"
+  ],
+  "author": "Vincent Voyer <vincent.voyer@algolia.com>",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "0.14.1",
+    "sinon": "1.12.2",
+    "tape": "3.5.0",
+    "zuul": "1.17.1"
+  }
+}
