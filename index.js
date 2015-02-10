@@ -20,7 +20,11 @@ function FauxJax() {
   this.readyState;
 
   this.timeout = 0;
-  this.withCredentials = false;
+
+  if (support.cors) {
+    this.withCredentials = false;
+  }
+
   this.upload;
   this.responseType = '';
   this.responseText = '';
