@@ -27,9 +27,12 @@ xhr.send(
   }
 ));
 
-xhr.respond(200, {
-  'Content-Type': 'application/json'
-}, '{"zup": "bro?"}');
+xhr.respond(
+  200, {
+    'Content-Type': 'application/json'
+  },
+  '{"zup": "bro?"}'
+);
 
 console.log(fauxJax.requests[0].response);
 // '{"zup": "bro?"}'
