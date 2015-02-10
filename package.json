@@ -1,7 +1,7 @@
 {
   "name": "faux-jax",
   "version": "1.0.0",
-  "description": "A fake (mock) XMLHttpRequest implementation",
+  "description": "Intercept Ajax requests in the browser",
   "main": "index.js",
   "scripts": {
     "lint": "eslint --quiet .",
@@ -10,6 +10,8 @@
   "keywords": [
     "xhr",
     "XMLHttpRequest",
+    "XDomainRequest",
+    "ajax",
     "fake",
     "mock",
     "testing"
