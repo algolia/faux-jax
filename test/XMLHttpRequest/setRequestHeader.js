@@ -1,15 +1,15 @@
 var test = require('tape');
 
-var FauxJax = require('../');
+var XMLHttpRequest = require('../../lib/XMLHttpRequest');
 
 test('setRequestHeader throws when state is not OPENED', function(t) {
-  var xhr = new FauxJax();
+  var xhr = new XMLHttpRequest();
   t.throws(xhr.setRequestHeader.bind(xhr, 'content-encoding', 'UTF-8'), Error, 'State is not OPENED');
   t.end();
 });
 
 test('setRequestHeader throws when send() flag is true', function(t) {
-  var xhr = new FauxJax();
+  var xhr = new XMLHttpRequest();
   xhr.open('GET', '/');
   xhr.sendFlag = true;
   t.throws(xhr.setRequestHeader.bind(xhr), Error, 'send() flag is true');
@@ -17,21 +17,21 @@ test('setRequestHeader throws when send() flag is true', function(t) {
 });
 
 test('setRequestHeader throws when name is undefined', function(t) {
-  var xhr = new FauxJax();
+  var xhr = new XMLHttpRequest();
   xhr.open('GET', '/');
   t.throws(xhr.setRequestHeader.bind(xhr), SyntaxError, 'Bad header name');
   t.end();
 });
 
 test('setRequestHeader throws when value is undefined', function(t) {
-  var xhr = new FauxJax();
+  var xhr = new XMLHttpRequest();
   xhr.open('GET', '/');
   t.throws(xhr.setRequestHeader.bind(xhr, 'content-encoding'), SyntaxError, 'No given value');
   t.end();
 });
 
 test('setRequestHeader adds headers', function(t) {
-  var xhr = new FauxJax();
+  var xhr = new XMLHttpRequest();
   xhr.open('GET', '/');
   xhr.setRequestHeader('name', 'val');
   t.deepEqual(xhr.requestHeaders, {

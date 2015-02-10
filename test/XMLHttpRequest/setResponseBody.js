@@ -1,23 +1,23 @@
 var test = require('tape');
 
-var FauxJax = require('../');
-var support = require('../support');
+var XMLHttpRequest = require('../../lib/XMLHttpRequest');
+var support = require('../../lib/support');
 
 test('setResponseBody throws when state is not OPEN', function(t) {
-  var xhr = new FauxJax();
+  var xhr = new XMLHttpRequest();
   t.throws(xhr.setResponseBody.bind(xhr, 'boom'), Error, 'State is < OPENED');
   t.end();
 });
 
 test('setResponseBody throws when send() flag is unset', function(t) {
-  var xhr = new FauxJax();
+  var xhr = new XMLHttpRequest();
   xhr.open('GET', '/');
   t.throws(xhr.setResponseBody.bind(xhr, 'boom'), Error, 'Send() flag is unset');
   t.end();
 });
 
 test('setResponseBody throws when state is not HEADERS_RECEIVED', function(t) {
-  var xhr = new FauxJax();
+  var xhr = new XMLHttpRequest();
   xhr.open('GET', '/');
   xhr.send();
   t.throws(xhr.setResponseBody.bind(xhr, 'boom'), Error, 'State is < HEADERS_RECEIVED');
@@ -25,7 +25,7 @@ test('setResponseBody throws when state is not HEADERS_RECEIVED', function(t) {
 });
 
 test('setResponseBody throws when body is not a String', function(t) {
-  var xhr = new FauxJax();
+  var xhr = new XMLHttpRequest();
   xhr.open('GET', '/');
   xhr.send();
   xhr.setResponseHeaders();
@@ -41,7 +41,7 @@ test('setResponseBody sends readystatechange event with a LOADING readyState eve
   clock.tick(500);
 
   var body = (new Array(20)).join();
-  var xhr = new FauxJax();
+  var xhr = new XMLHttpRequest();
   xhr.open('GET', '/');
   xhr.send();
   xhr.setResponseHeaders();
@@ -80,7 +80,7 @@ test('setResponseBody sends readystatechange event with a LOADING readyState eve
 });
 
 test('setResponseBody sends readystatechange event with a DONE readyState when finished', function(t) {
-  var xhr = new FauxJax();
+  var xhr = new XMLHttpRequest();
   xhr.open('GET', '/');
   xhr.send();
   xhr.setResponseHeaders();
@@ -99,7 +99,7 @@ test('setResponseBody sends readystatechange event with a DONE readyState when f
 });
 
 test('setResponseBody sets responseText', function(t) {
-  var xhr = new FauxJax();
+  var xhr = new XMLHttpRequest();
   xhr.open('GET', '/');
   xhr.send();
   xhr.setResponseHeaders();
@@ -111,7 +111,7 @@ test('setResponseBody sets responseText', function(t) {
 
 if (support.response) {
   test('setResponseBody sets response', function(t) {
-    var xhr = new FauxJax();
+    var xhr = new XMLHttpRequest();
     xhr.open('GET', '/');
     xhr.send();
     xhr.setResponseHeaders();
@@ -124,7 +124,7 @@ if (support.response) {
 
 if (support.response) {
   test('setResponseBody understand responseType=json', function(t) {
-    var xhr = new FauxJax();
+    var xhr = new XMLHttpRequest();
     xhr.open('GET', '/');
     xhr.responseType = 'json';
     xhr.send();

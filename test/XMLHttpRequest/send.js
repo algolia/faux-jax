@@ -1,15 +1,15 @@
 var test = require('tape');
 
-var FauxJax = require('../');
+var XMLHttpRequest = require('../../lib/XMLHttpRequest');
 
 test('send throws when state is not OPENED', function(t) {
-  var xhr = new FauxJax();
+  var xhr = new XMLHttpRequest();
   t.throws(xhr.send.bind(xhr), Error, 'State is not OPENED');
   t.end();
 });
 
 test('send throws when send() flag is set', function(t) {
-  var xhr = new FauxJax();
+  var xhr = new XMLHttpRequest();
   xhr.open('GET', '/');
   xhr.sendFlag = true;
   t.throws(xhr.send.bind(xhr), Error, 'send() flag is true');
@@ -17,7 +17,7 @@ test('send throws when send() flag is set', function(t) {
 });
 
 test('send forces UTF-8 charset when body is not null', function(t) {
-  var xhr = new FauxJax();
+  var xhr = new XMLHttpRequest();
   xhr.open('POST', '/yaw');
   xhr.setRequestHeader('Content-Type', 'text/yaw; charset=utf-9');
   xhr.send('Hello!');
@@ -27,7 +27,7 @@ test('send forces UTF-8 charset when body is not null', function(t) {
 });
 
 test('send sets default `Content-Type` when none set', function(t) {
-  var xhr = new FauxJax();
+  var xhr = new XMLHttpRequest();
   xhr.open('POST', '/yaw');
   xhr.send('Hello!');
 
@@ -36,7 +36,7 @@ test('send sets default `Content-Type` when none set', function(t) {
 });
 
 test('send sets requestBody', function(t) {
-  var xhr = new FauxJax();
+  var xhr = new XMLHttpRequest();
   xhr.open('POST', '/yaw');
   xhr.send('Hello!');
 
@@ -51,7 +51,7 @@ test('send sets requestBody to null when GET or HEAD', function(t) {
   var body = 'YAW!';
 
   methods.forEach(function(methodName) {
-    var xhr = new FauxJax();
+    var xhr = new XMLHttpRequest();
     xhr.open(methodName, '/HAI');
     xhr.send(body);
 
@@ -67,7 +67,7 @@ test('send fires a loadstart event', function(t) {
   var clock = sinon.useFakeTimers();
   clock.tick(500);
 
-  var xhr = new FauxJax();
+  var xhr = new XMLHttpRequest();
 
   var expectedEvent = {
     bubbles: false,

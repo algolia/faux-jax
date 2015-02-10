@@ -1,15 +1,18 @@
+// exercice left for the reader: why is this file named "constructor_" instead
+// of "constructor"?
+
 var test = require('tape');
 
-var FauxJax = require('../');
-var support = require('../support');
+var XMLHttpRequest = require('../../lib/XMLHttpRequest');
+var support = require('../../lib/support');
 
-test('new FauxJax()', function(t) {
-  t.ok(new FauxJax(), 'Constructor works');
+test('new XMLHttpRequest()', function(t) {
+  t.ok(new XMLHttpRequest(), 'Constructor works');
   t.end();
 });
 
 test('constructor inits some properties', function(t) {
-  var fauxJax = new FauxJax();
+  var fauxJax = new XMLHttpRequest();
   t.equal(fauxJax.onabort, null, 'onabort is null');
   t.equal(fauxJax.onerror, null, 'onerror is null');
   t.equal(fauxJax.onload, null, 'onload is null');

@@ -84,6 +84,7 @@
   ],
   "globals": {
     "Event": true,
+    "XMLHttpRequest": true,
     "EventTarget": true
   }
 }

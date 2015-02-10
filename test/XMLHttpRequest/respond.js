@@ -1,16 +1,16 @@
 var test = require('tape');
 
-var FauxJax = require('../');
+var XMLHttpRequest = require('../../lib/XMLHttpRequest');
 
 test('respond sets status', function(t) {
-  var xhr = new FauxJax();
+  var xhr = new XMLHttpRequest();
   xhr.respond(200);
   t.equal(xhr.status, 200);
   t.end();
 });
 
 test('respond sets statusText', function(t) {
-  var xhr = new FauxJax();
+  var xhr = new XMLHttpRequest();
   xhr.respond(200);
   t.equal(xhr.statusText, 'OK');
   t.end();
@@ -19,7 +19,7 @@ test('respond sets statusText', function(t) {
 test('respond calls setResponseHeaders', function(t) {
   var headers = {'how': 'dy'};
   var sinon = require('sinon');
-  var xhr = new FauxJax();
+  var xhr = new XMLHttpRequest();
   xhr.open('GET', '/');
   xhr.send();
   sinon.spy(xhr, 'setResponseHeaders');
@@ -34,7 +34,7 @@ test('respond calls setResponseHeaders', function(t) {
 test('respond calls setResponseBody', function(t) {
   var body = 'YAW';
   var sinon = require('sinon');
-  var xhr = new FauxJax();
+  var xhr = new XMLHttpRequest();
   xhr.open('GET', '/');
   xhr.send();
   sinon.spy(xhr, 'setResponseBody');

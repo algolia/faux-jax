@@ -1,11 +1,11 @@
 var test = require('tape');
 
-var FauxJax = require('../');
-var support = require('../support');
+var XMLHttpRequest = require('../../lib/XMLHttpRequest');
+var support = require('../../lib/support');
 
 if (support.timeout) {
   test('timeout is initialized at 0', function(t) {
-    var xhr = new FauxJax();
+    var xhr = new XMLHttpRequest();
     t.equal(xhr.timeout, 0, 'timeout initialized at 0');
     t.end();
   });
@@ -15,7 +15,7 @@ if (support.timeout) {
 
     var sinon = require('sinon');
     var clock = sinon.useFakeTimers();
-    var xhr = new FauxJax();
+    var xhr = new XMLHttpRequest();
     xhr.timeout = 500;
     xhr.open('GET', '/');
     xhr.send();

@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "lint": "eslint --quiet .",
-    "dev": "zuul --local 8080 --ui tape test/*.js"
+    "dev": "zuul --local 8080 --ui tape test/index.js"
   },
   "keywords": [
     "xhr",
@@ -16,7 +16,10 @@
   ],
   "author": "Vincent Voyer <vincent.voyer@algolia.com>",
   "license": "ISC",
+  "repository": "algolia/faux-jax",
   "devDependencies": {
+    "bulk-require": "0.2.1",
+    "bulkify": "1.1.0",
     "eslint": "0.14.1",
     "sinon": "1.12.2",
     "tape": "3.5.0",

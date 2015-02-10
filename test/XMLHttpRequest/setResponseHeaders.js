@@ -1,15 +1,15 @@
 var test = require('tape');
 
-var FauxJax = require('../');
+var XMLHttpRequest = require('../../lib/XMLHttpRequest');
 
 test('setResponseHeaders throws when state is not open', function(t) {
-  var xhr = new FauxJax();
+  var xhr = new XMLHttpRequest();
   t.throws(xhr.setResponseHeaders.bind(xhr), Error, 'State is not OPENED');
   t.end();
 });
 
 test('setResponseHeaders throws when send() flag is unset', function(t) {
-  var xhr = new FauxJax();
+  var xhr = new XMLHttpRequest();
   t.throws(xhr.setResponseHeaders.bind(xhr), Error, 'State is not OPENED');
   xhr.open('GET', '/');
   t.throws(xhr.setResponseHeaders.bind(xhr), Error, 'Send() flag is unset');
@@ -17,7 +17,7 @@ test('setResponseHeaders throws when send() flag is unset', function(t) {
 });
 
 test('setResponseHeaders sets response headers', function(t) {
-  var xhr = new FauxJax();
+  var xhr = new XMLHttpRequest();
   xhr.open('GET', '/');
   xhr.send();
 
@@ -33,7 +33,7 @@ test('setResponseHeaders sets response headers', function(t) {
 });
 
 test('setResponseHeaders sets readyState to HEADERS_RECEIVED (2)', function(t) {
-  var xhr = new FauxJax();
+  var xhr = new XMLHttpRequest();
   xhr.open('GET', '/');
   xhr.send();
 
@@ -50,7 +50,7 @@ test('setResponseHeaders fires a readystatechange event', function(t) {
   var clock = sinon.useFakeTimers();
   clock.tick(500);
 
-  var xhr = new FauxJax();
+  var xhr = new XMLHttpRequest();
   xhr.open('GET', '/');
   xhr.send();
 

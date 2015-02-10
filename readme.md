@@ -1,6 +1,11 @@
-# FauxJax
+# faux-jax
 
-Provides a fake implementation of [XMLHttpRequest])(https://xhr.spec.whatwg.org/).
+Intercept Ajax requests and respond to them. Dedicated to testing Ajax dependent
+JavaScript applications.
+
+We intercept [XMLHttpRequest](https://xhr.spec.whatwg.org/) and
+[XDomainRequest](https://msdn.microsoft.com/en-us/library/ie/cc288060(v=vs.85).aspx)
+requests in [compatible environments](#how).
 
 ```sh
 npm install faux-jax --save[-dev]
@@ -9,8 +14,10 @@ npm install faux-jax --save[-dev]
 # Example
 
 ```js
-var FauxJax = require('faux-jax');
-var xhr = new FauxJax();
+var fauxJax = require('faux-jax');
+
+fauxJax.install();
+var xhr = new XMLHttpRequest();
 
 xhr.open('POST', '/dawg');
 xhr.setRequestHeader('Content-Type', 'application/json');
@@ -24,33 +31,55 @@ xhr.respond(200, {
   'Content-Type': 'application/json'
 }, '{"zup": "bro?"}');
 
-console.log(xhr.response);
+console.log(fauxJax.requests[0].response);
 // '{"zup": "bro?"}'
+
+console.log(fauxJax.requests[0].requestHeaders);
+// {'Content-Type': 'application/json'}
+
+fauxJax.restore();
+
+console.log(fauxJax.requests.length);
+// 0
 ```
 
 # API
 
-## var xhr = new FauxJax();
+## fauxJax.install()
 
-Same as [XMLHttpRequest's constructor](https://xhr.spec.whatwg.org/#dom-xmlhttprequest).
+Replace global `XMLHttpRequest` and `XDomainRequest` with mocks.
 
-We follow [the spec](https://xhr.spec.whatwg.org/#interface-xmlhttprequest).
+## fauxJax.requests
 
-`FauxJax` is a fake implementation so we added some more methods and properties.
+Populated with every `new XMLHttpRequest()` or `new XDomainRequest()`.
 
-## xhr.url
+All requests have the native properties/methods from [the spec](https://xhr.spec.whatwg.org/).
 
-## xhr.requestHeaders
+We also added a couple of handy properties/methods for you to ease testing.
 
-## xhr.responseHeaders
+### request.requestUrl
 
-## xhr.requestBody
+### request.requestHeaders
 
-## xhr.respond(status, [headers], [body])
+### request.requestBody
 
-## xhr.setResponseHeaders(headers)
+### request.responseHeaders
 
-## xhr.setResponseBody(body)
+### request.respond(status, [headers], [body])
+
+### request.setResponseHeaders(headers)
+
+### request.setResponseBody(body)
+
+## fauxJax.restore()
+
+Sets back global `XMLHttpRequest` and `XDomainRequest` to native implementations.
+
+# How
+
+`faux-jax` uses [feature detection](./support) to only expose what's relevant for the current environment.
+
+i.e. on Chrome, we do not intercept nor expose `XDomainRequest`.
 
 # Development
 

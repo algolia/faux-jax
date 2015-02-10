@@ -1,9 +1,9 @@
 var test = require('tape');
 
-var FauxJax = require('../');
+var XMLHttpRequest = require('../../lib/XMLHttpRequest');
 
 test('abort sets response to error when state > UNSENT and send() flag is true', function(t) {
-  var xhr = new FauxJax();
+  var xhr = new XMLHttpRequest();
   xhr.open('POST', '/');
   xhr.send();
 
@@ -17,7 +17,7 @@ test('abort sets response to error when state > UNSENT and send() flag is true',
 });
 
 test('abort sets readystate to DONE when state > UNSENT and send() flag is true', function(t) {
-  var xhr = new FauxJax();
+  var xhr = new XMLHttpRequest();
   xhr.open('POST', '/');
   xhr.send();
 
@@ -36,7 +36,7 @@ test('abort sends a readystatechange event when state > UNSENT and send() flag i
   var clock = sinon.useFakeTimers();
   clock.tick(500);
 
-  var xhr = new FauxJax();
+  var xhr = new XMLHttpRequest();
 
   xhr.open('GET', '/');
   xhr.send();
@@ -73,7 +73,7 @@ test('abort dispatch ProgressEvent events when state > UNSENT and send() flag is
   var clock = sinon.useFakeTimers();
   clock.tick(500);
 
-  var xhr = new FauxJax();
+  var xhr = new XMLHttpRequest();
 
   var expectedEvents = [{
     bubbles: false,
@@ -132,7 +132,7 @@ test('abort dispatch ProgressEvent events when state > UNSENT and send() flag is
 });
 
 test('abort resets the xhr properties', function(t) {
-  var xhr = new FauxJax();
+  var xhr = new XMLHttpRequest();
   xhr.abort();
 
   t.equal(xhr.responseType, '');

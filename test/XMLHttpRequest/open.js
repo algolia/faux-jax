@@ -1,15 +1,15 @@
 var test = require('tape');
 
-var FauxJax = require('../');
+var XMLHttpRequest = require('../../lib/XMLHttpRequest');
 
 test('open throws when method not a string', function(t) {
-  var xhr = new FauxJax();
+  var xhr = new XMLHttpRequest();
   t.throws(xhr.open.bind(xhr, 421), SyntaxError, 'Bad method type throws SyntaxError');
   t.end();
 });
 
 test('open throws when method unknown', function(t) {
-  var xhr = new FauxJax();
+  var xhr = new XMLHttpRequest();
   t.throws(xhr.open.bind(xhr, 'PLURK'), SyntaxError, 'Bad method name throws SyntaxError');
   t.end();
 });
@@ -19,7 +19,7 @@ test('open accepts uppercase methods', function(t) {
   t.plan(methods.length);
 
   methods.forEach(function(method) {
-    var xhr = new FauxJax();
+    var xhr = new XMLHttpRequest();
     t.doesNotThrow(xhr.open.bind(xhr, method), 'Uppercase accepted methods does not throws');
   });
 });
@@ -29,9 +29,9 @@ test('open normalizes lowercase methods', function(t) {
   t.plan(methods.length * 2);
 
   methods.forEach(function(method) {
-    var xhr = new FauxJax();
+    var xhr = new XMLHttpRequest();
     t.doesNotThrow(xhr.open.bind(xhr, method), 'Lowercased accepted methods does not throws');
-    t.equal(xhr.method, method.toUpperCase(), 'Method name was');
+    t.equal(xhr.requestMethod, method.toUpperCase(), 'Method name was lowercased');
   });
 });
 
@@ -41,18 +41,18 @@ test('open throws on no-uppercase forbidden methods (no auto normalization)', fu
   t.plan(methods.length);
 
   methods.forEach(function(method) {
-    var xhr = new FauxJax();
+    var xhr = new XMLHttpRequest();
     t.throws(xhr.open.bind(xhr, method), Error);
   });
 });
 
 test('open initialize properties', function(t) {
-  var xhr = new FauxJax();
+  var xhr = new XMLHttpRequest();
   xhr.open('poSt', '/lol.gif');
 
-  t.equal(xhr.method, 'POST');
+  t.equal(xhr.requestMethod, 'POST');
   t.equal(xhr.async, true);
-  t.equal(xhr.url, '/lol.gif');
+  t.equal(xhr.requestUrl, '/lol.gif');
   t.equal(xhr.username, undefined);
   t.equal(xhr.password, undefined);
 
@@ -66,7 +66,7 @@ test('open fires a `readystatechange` event', function(t) {
   var clock = sinon.useFakeTimers();
   clock.tick(500);
 
-  var xhr = new FauxJax();
+  var xhr = new XMLHttpRequest();
 
   var expectedEvent = {
     bubbles: false,
