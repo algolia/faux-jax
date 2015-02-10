@@ -11,7 +11,7 @@ var forbiddenMethods = require('./forbidden-methods');
 var httpStatusCodes = require('./http-status-codes');
 var methods = require('./methods.js');
 var states = require('./states');
-
+var support = require('./support');
 
 // https://xhr.spec.whatwg.org/#constructors
 function FauxJax() {
@@ -26,7 +26,11 @@ function FauxJax() {
   this.responseText = '';
   this.responseXML = null;
   this.readyState = states.UNSENT;
-  this.response = '';
+
+  if (support.response) {
+    this.response = '';
+  }
+
   this.responseURL = '';
   this.status = 0;
   this.statusText = '';
@@ -127,7 +131,10 @@ FauxJax.prototype.send = function(body) {
 // https://xhr.spec.whatwg.org/#the-abort()-method
 FauxJax.prototype.abort = function() {
   if (this.readyState > states.UNSENT && this.sendFlag === true) {
-    this.response = new Error('NetworkError');
+
+    if (support.response) {
+      this.response = new Error('NetworkError');
+    }
 
     readyStateChange(this, states.DONE);
 
@@ -162,7 +169,11 @@ FauxJax.prototype.abort = function() {
   this.responseText = '';
   this.responseXML = null;
   this.readyState = states.UNSENT;
-  this.response = '';
+
+  if (support.response) {
+    this.response = '';
+  }
+
   this.responseURL = '';
   this.status = 0;
   this.statusText = '';
@@ -231,10 +242,12 @@ FauxJax.prototype.setResponseBody = function(body) {
     index += chunkSize;
   }
 
-  if (this.responseType === 'json') {
-    this.response = JSON.parse(this.responseText);
-  } else {
-    this.response = this.responseText;
+  if (support.response) {
+    if (this.responseType === 'json') {
+      this.response = JSON.parse(this.responseText);
+    } else {
+      this.response = this.responseText;
+    }
   }
 
   readyStateChange(this, states.DONE);
