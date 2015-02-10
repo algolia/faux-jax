@@ -19,7 +19,9 @@ function FauxJax() {
 
   this.readyState;
 
-  this.timeout = 0;
+  if (support.timeout) {
+    this.timeout = 0;
+  }
 
   if (support.cors) {
     this.withCredentials = false;
@@ -108,6 +110,8 @@ FauxJax.prototype.send = function(body) {
     throw new Error('InvalidStateError');
   }
 
+  this._setTimeoutIfNecessary();
+
   if (this.method === 'GET' || this.method === 'HEAD') {
     this.requestBody = null;
   } else {
@@ -140,31 +144,7 @@ FauxJax.prototype.abort = function() {
       this.response = new Error('NetworkError');
     }
 
-    readyStateChange(this, states.DONE);
-
-    dispatchEvent(this, 'progress', {
-      bubbles: false,
-      cancelable: false,
-      total: 0,
-      loaded: 0,
-      lengthComputable: false
-    });
-
-    dispatchEvent(this, 'abort', {
-      bubbles: false,
-      cancelable: false,
-      total: 0,
-      loaded: 0,
-      lengthComputable: false
-    });
-
-    dispatchEvent(this, 'loadend', {
-      bubbles: false,
-      cancelable: false,
-      total: 0,
-      loaded: 0,
-      lengthComputable: false
-    });
+    handleRequestError(this, 'abort');
 
     return;
   }
@@ -181,7 +161,10 @@ FauxJax.prototype.abort = function() {
   this.responseURL = '';
   this.status = 0;
   this.statusText = '';
-  this.timeout = 0;
+
+  if (support.timeout) {
+    this.timeout = 0;
+  }
 };
 
 // https://xhr.spec.whatwg.org/#the-getresponseheader()-method
@@ -254,6 +237,10 @@ FauxJax.prototype.setResponseBody = function(body) {
     }
   }
 
+  if (this._timeoutID) {
+    clearTimeout(this._timeoutID);
+  }
+
   readyStateChange(this, states.DONE);
 };
 
@@ -267,6 +254,12 @@ FauxJax.prototype.respond = function(statusCode, headers, body) {
 
   if (body !== undefined) {
     this.setResponseBody(body);
+  }
+};
+
+FauxJax.prototype._setTimeoutIfNecessary = function() {
+  if (this.timeout > 0 && this._timeoutID === undefined) {
+    this._timeoutID = setTimeout(handleRequestError.bind(null, this, 'timeout'), this.timeout);
   }
 };
 
@@ -303,6 +296,36 @@ function readyStateChange(eventTarget, readyState) {
   dispatchEvent(eventTarget, 'readystatechange', {
     bubbles: false,
     cancelable: false
+  });
+}
+
+// https://xhr.spec.whatwg.org/#handle-errors
+// https://xhr.spec.whatwg.org/#request-error-steps
+function handleRequestError(eventTarget, type) {
+  readyStateChange(eventTarget, states.DONE);
+
+  dispatchEvent(eventTarget, 'progress', {
+    bubbles: false,
+    cancelable: false,
+    total: 0,
+    loaded: 0,
+    lengthComputable: false
+  });
+
+  dispatchEvent(eventTarget, type, {
+    bubbles: false,
+    cancelable: false,
+    total: 0,
+    loaded: 0,
+    lengthComputable: false
+  });
+
+  dispatchEvent(eventTarget, 'loadend', {
+    bubbles: false,
+    cancelable: false,
+    total: 0,
+    loaded: 0,
+    lengthComputable: false
   });
 }
 

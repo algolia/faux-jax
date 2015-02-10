@@ -1,6 +1,7 @@
 var test = require('tape');
 
 var FauxJax = require('../');
+var support = require('../support');
 
 test('setResponseBody throws when state is not OPEN', function(t) {
   var xhr = new FauxJax();
@@ -108,27 +109,31 @@ test('setResponseBody sets responseText', function(t) {
   t.end();
 });
 
-test('setResponseBody sets response', function(t) {
-  var xhr = new FauxJax();
-  xhr.open('GET', '/');
-  xhr.send();
-  xhr.setResponseHeaders();
-  xhr.setResponseBody('DAWG');
+if (support.response) {
+  test('setResponseBody sets response', function(t) {
+    var xhr = new FauxJax();
+    xhr.open('GET', '/');
+    xhr.send();
+    xhr.setResponseHeaders();
+    xhr.setResponseBody('DAWG');
 
-  t.equal(xhr.response, 'DAWG', 'response matches');
-  t.end();
-});
+    t.equal(xhr.response, 'DAWG', 'response matches');
+    t.end();
+  });
+}
 
-test('setResponseBody understand responseType=json', function(t) {
-  var xhr = new FauxJax();
-  xhr.open('GET', '/');
-  xhr.responseType = 'json';
-  xhr.send();
-  xhr.setResponseHeaders();
-  xhr.setResponseBody('{"yaw": "dawg"}');
+if (support.response) {
+  test('setResponseBody understand responseType=json', function(t) {
+    var xhr = new FauxJax();
+    xhr.open('GET', '/');
+    xhr.responseType = 'json';
+    xhr.send();
+    xhr.setResponseHeaders();
+    xhr.setResponseBody('{"yaw": "dawg"}');
 
-  t.deepEqual(xhr.response, {
-    yaw: 'dawg'
-  }, 'response matches and is a JSON object');
-  t.end();
-});
+    t.deepEqual(xhr.response, {
+      yaw: 'dawg'
+    }, 'response matches and is a JSON object');
+    t.end();
+  });
+}

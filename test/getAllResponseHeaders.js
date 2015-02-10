@@ -4,7 +4,7 @@ var FauxJax = require('../');
 
 test('getAllResponseHeaders sends empty string when no headers', function(t) {
   var xhr = new FauxJax();
-  t.equal('', xhr.getAllResponseHeaders, 'we get an empty string');
+  t.equal('', xhr.getAllResponseHeaders(), 'we get an empty string');
   t.end();
 });
 

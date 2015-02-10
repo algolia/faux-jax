@@ -1,6 +1,7 @@
 var test = require('tape');
 
 var FauxJax = require('../');
+var support = require('../support');
 
 test('new FauxJax()', function(t) {
   t.ok(new FauxJax(), 'Constructor works');
@@ -25,6 +26,14 @@ test('constructor inits some properties', function(t) {
   t.equal(fauxJax.responseXML, null, 'responseXML is null');
   t.equal(fauxJax.status, 0, 'response status is 0');
   t.equal(fauxJax.statusText, '', 'response statusText is empty string');
-  t.equal(fauxJax.timeout, 0, 'default timeout is 0');
+
+  if (support.timeout) {
+    t.equal(fauxJax.timeout, 0, 'default timeout is 0');
+  }
+
+  if (support.withCredentials) {
+    t.equal(fauxJax.withCredentials, false, 'withCredentials defaults to false');
+  }
+
   t.end();
 });
