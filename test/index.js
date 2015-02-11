@@ -16,16 +16,27 @@ function run() {
 
   if (support.hasXMLHttpRequest) {
     test('nothing gets intercepted by default', function(t) {
-      t.plan(1);
+      t.plan(2);
       var xhr = new XMLHttpRequest();
       xhr.open('GET', location.pathname);
       xhr.send();
-      xhr.onload = function() {
-        t.ok(
-          /faux\-jax/.test(xhr.responseText),
-          'We got the current location content with ajax'
-        );
-      };
+      if (support.addEventListener) {
+        t.pass('We used addEventListener');
+        xhr.addEventListener('load', function() {
+          t.ok(
+            /faux\-jax/.test(xhr.responseText),
+            'We got the current location content with ajax'
+          );
+        });
+      } else {
+        xhr.onload = function() {
+          t.pass('We used onload=');
+          t.ok(
+            /faux\-jax/.test(xhr.responseText),
+            'We got the current location content with ajax'
+          );
+        };
+      }
     });
 
     test('fauxJax intercepts XMLHttpRequests', function(t) {
