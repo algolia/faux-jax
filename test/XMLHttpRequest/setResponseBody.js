@@ -1,6 +1,6 @@
 var test = require('tape');
 
-var XMLHttpRequest = require('../../lib/XMLHttpRequest');
+var XMLHttpRequest = require('../../lib/XMLHttpRequest/');
 var support = require('../../lib/support');
 
 test('setResponseBody throws when state is not OPEN', function(t) {

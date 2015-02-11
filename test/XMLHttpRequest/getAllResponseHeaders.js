@@ -1,6 +1,6 @@
 var test = require('tape');
 
-var XMLHttpRequest = require('../../lib/XMLHttpRequest');
+var XMLHttpRequest = require('../../lib/XMLHttpRequest/');
 
 test('getAllResponseHeaders sends empty string when no headers', function(t) {
   var xhr = new XMLHttpRequest();

@@ -1,6 +1,6 @@
 var test = require('tape');
 
-var XMLHttpRequest = require('../../lib/XMLHttpRequest');
+var XMLHttpRequest = require('../../lib/XMLHttpRequest/');
 
 test('setRequestHeader throws when state is not OPENED', function(t) {
   var xhr = new XMLHttpRequest();

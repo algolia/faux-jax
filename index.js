@@ -1,6 +1,6 @@
 var inherits = require('util').inherits;
 
-var XMLHttpRequest = require('./lib/XMLHttpRequest');
+var XMLHttpRequest = require('./lib/XMLHttpRequest/');
 var native = require('./lib/native');
 var support = require('./lib/support');
 

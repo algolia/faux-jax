@@ -3,7 +3,7 @@
 
 var test = require('tape');
 
-var XMLHttpRequest = require('../../lib/XMLHttpRequest');
+var XMLHttpRequest = require('../../lib/XMLHttpRequest/');
 var support = require('../../lib/support');
 
 test('new XMLHttpRequest()', function(t) {

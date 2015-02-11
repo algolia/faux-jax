@@ -1,6 +1,6 @@
 var test = require('tape');
 
-var XMLHttpRequest = require('../../lib/XMLHttpRequest');
+var XMLHttpRequest = require('../../lib/XMLHttpRequest/');
 
 test('abort sets response to error when state > UNSENT and send() flag is true', function(t) {
   var xhr = new XMLHttpRequest();
