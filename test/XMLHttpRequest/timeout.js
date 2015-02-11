@@ -20,10 +20,10 @@ if (support.timeout) {
     xhr.open('GET', '/');
     xhr.send();
 
-    xhr.addEventListener('timeout', function() {
+    xhr.ontimeout = function() {
       t.pass('We received a timeout event');
       clock.restore();
-    });
+    };
 
     clock.tick(800);
   });

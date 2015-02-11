@@ -60,7 +60,7 @@ test('open initialize properties', function(t) {
 });
 
 test('open fires a `readystatechange` event', function(t) {
-  t.plan(2);
+  t.plan(1);
   var sinon = require('sinon');
 
   var clock = sinon.useFakeTimers();
@@ -81,10 +81,6 @@ test('open fires a `readystatechange` event', function(t) {
   xhr.onreadystatechange = function(e) {
     t.deepEqual(e, expectedEvent, 'Received an event through onreadystatechange=fn listener');
   };
-
-  xhr.addEventListener('readystatechange', function(e) {
-    t.deepEqual(e, expectedEvent, 'Received an event through addEventListener interface');
-  });
 
   xhr.open('GET', '/google.gif');
 

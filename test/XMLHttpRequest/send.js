@@ -60,7 +60,7 @@ test('send sets requestBody to null when GET or HEAD', function(t) {
 });
 
 test('send fires a loadstart event', function(t) {
-  t.plan(2);
+  t.plan(1);
 
   var sinon = require('sinon');
 
@@ -85,10 +85,6 @@ test('send fires a loadstart event', function(t) {
   xhr.onloadstart = function(e) {
     t.deepEqual(e, expectedEvent, 'Received an event through onloadstart=fn listener');
   };
-
-  xhr.addEventListener('loadstart', function(e) {
-    t.deepEqual(e, expectedEvent, 'Received an event through addEventListener interface');
-  });
 
   xhr.open('POST', '/yaw');
   xhr.send('Hello!');

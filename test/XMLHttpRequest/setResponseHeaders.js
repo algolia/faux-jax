@@ -44,7 +44,7 @@ test('setResponseHeaders sets readyState to HEADERS_RECEIVED (2)', function(t) {
 });
 
 test('setResponseHeaders fires a readystatechange event', function(t) {
-  t.plan(2);
+  t.plan(1);
 
   var sinon = require('sinon');
   var clock = sinon.useFakeTimers();
@@ -67,10 +67,6 @@ test('setResponseHeaders fires a readystatechange event', function(t) {
   xhr.onreadystatechange = function(e) {
     t.deepEqual(e, expectedEvent, 'event matches');
   };
-
-  xhr.addEventListener('readystatechange', function(e) {
-    t.deepEqual(e, expectedEvent, 'event matches');
-  });
 
   xhr.setResponseHeaders();
 

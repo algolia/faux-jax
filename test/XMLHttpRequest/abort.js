@@ -30,7 +30,7 @@ test('abort sets readystate to DONE when state > UNSENT and send() flag is true'
 });
 
 test('abort sends a readystatechange event when state > UNSENT and send() flag is true', function(t) {
-  t.plan(2);
+  t.plan(1);
 
   var sinon = require('sinon');
   var clock = sinon.useFakeTimers();
@@ -58,16 +58,12 @@ test('abort sends a readystatechange event when state > UNSENT and send() flag i
     t.deepEqual(e, expectedEvent, 'event matches');
   };
 
-  xhr.addEventListener('readystatechange', function(e) {
-    t.deepEqual(e, expectedEvent, 'event matches');
-  });
-
   xhr.abort();
   clock.restore();
 });
 
 test('abort dispatch ProgressEvent events when state > UNSENT and send() flag is true', function(t) {
-  t.plan(6);
+  t.plan(3);
 
   var sinon = require('sinon');
   var clock = sinon.useFakeTimers();
@@ -114,10 +110,6 @@ test('abort dispatch ProgressEvent events when state > UNSENT and send() flag is
     xhr['on' + expectedEvent.type] = function(e) {
       t.deepEqual(e, expectedEvent, 'event matches');
     };
-
-    xhr.addEventListener(expectedEvent.type, function(e) {
-      t.deepEqual(e, expectedEvent, 'event matches');
-    });
   });
 
   xhr.open('POST', '/yaw');

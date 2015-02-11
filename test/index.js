@@ -20,12 +20,12 @@ function run() {
       var xhr = new XMLHttpRequest();
       xhr.open('GET', location.pathname);
       xhr.send();
-      xhr.addEventListener('load', function() {
+      xhr.onload = function() {
         t.ok(
           /faux\-jax/.test(xhr.responseText),
           'We got the current location content with ajax'
         );
-      });
+      };
     });
 
     test('fauxJax intercepts XMLHttpRequests', function(t) {

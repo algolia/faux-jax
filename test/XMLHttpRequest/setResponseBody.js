@@ -66,14 +66,14 @@ test('setResponseBody sends readystatechange event with a LOADING readyState eve
     type: 'readystatechange'
   }];
 
-  xhr.addEventListener('readystatechange', function listen(e) {
+  xhr.onreadystatechange = function listen(e) {
     t.deepEqual(e, expectedEvents[receivedEvents], 'event matches');
     t.equal(e.target.readyState, 3, 'readyState is LOADING');
     receivedEvents++;
     if (receivedEvents === 2) {
-      xhr.removeEventListener('readystatechange', listen);
+      xhr.onreadystatechange = function() {};
     }
-  });
+  };
 
   xhr.setResponseBody(body);
   clock.restore();
@@ -87,9 +87,9 @@ test('setResponseBody sends readystatechange event with a DONE readyState when f
 
   var receivedEvents = [];
 
-  xhr.addEventListener('readystatechange', function listen(e) {
+  xhr.onreadystatechange = function listen(e) {
     receivedEvents.push(e);
-  });
+  };
 
   xhr.setResponseBody('DAWG');
 
