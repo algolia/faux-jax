@@ -119,7 +119,7 @@ Many thanks!
 
 [package-url]: https://npmjs.org/package/faux-jax
 [npm-version-svg]: http://vb.teelaun.ch/algolia/faux-jax.svg
-[travis-svg]: https://img.shields.io/travis/algolia/faux-jax.svg?style=flat-square
+[travis-svg]: https://img.shields.io/travis/algolia/faux-jax/master.svg?style=flat-square
 [travis-url]: https://travis-ci.org/algolia/faux-jax
 [license-image]: http://img.shields.io/npm/l/faux-jax.svg?style=flat-square
 [license-url]: LICENSE
