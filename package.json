@@ -1,6 +1,6 @@
 {
   "name": "faux-jax",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Intercept Ajax requests in the browser",
   "main": "index.js",
   "scripts": {
