@@ -110,6 +110,29 @@ test('xhr.setResponseBody() sets responseText', function(t) {
   t.end();
 });
 
+test('xhr.setResponseBody() sets responseURL when relative', function(t) {
+  var urlResolve = require('url').resolve;
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', 'ah/ahahahah#ROFL');
+  xhr.send();
+  xhr.setResponseHeaders({});
+  xhr.setResponseBody('DAWG');
+
+  t.equal(xhr.responseURL, urlResolve(location.href, 'ah/ahahahah'), 'responseURL matches');
+  t.end();
+});
+
+test('xhr.setResponseBody() sets responseURL when absolute', function(t) {
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', 'http://www.google.com/dawg#WIIIIII');
+  xhr.send();
+  xhr.setResponseHeaders({});
+  xhr.setResponseBody('DAWG');
+
+  t.equal(xhr.responseURL, 'http://www.google.com/dawg', 'responseURL matches');
+  t.end();
+});
+
 if (support.response) {
   test('xhr.setResponseBody() sets response', function(t) {
     var xhr = new XMLHttpRequest();

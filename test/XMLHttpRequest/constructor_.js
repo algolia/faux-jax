@@ -18,13 +18,13 @@ test('XMLHttpRequest interface', function(t) {
   t.equal(xhr.onreadystatechange, null, 'onreadystatechange is null');
   t.equal(xhr.ontimeout, null, 'ontimeout is null');
   t.equal(xhr.readyState, 0, 'readyState is 0');
-  t.equal(xhr.response, '', 'response is empty string');
-  t.equal(xhr.responseText, '', 'responseText is empty string');
-  t.equal(xhr.responseType, '', 'responseType is empty string');
-  t.equal(xhr.responseURL, '', 'responseURL is empty string');
+  t.equal(xhr.response, '', 'response is an empty string');
+  t.equal(xhr.responseText, '', 'responseText is an empty string');
+  t.equal(xhr.responseType, '', 'responseType is an empty string');
+  t.equal(xhr.responseURL, '', 'responseURL is an empty string');
   t.equal(xhr.responseXML, null, 'responseXML is null');
   t.equal(xhr.status, 0, 'response status is 0');
-  t.equal(xhr.statusText, '', 'response statusText is empty string');
+  t.equal(xhr.statusText, '', 'response statusText is an empty string');
 
   if (support.timeout) {
     t.equal(xhr.timeout, 0, 'default timeout is 0');
