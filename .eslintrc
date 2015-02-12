@@ -85,6 +85,7 @@
   "globals": {
     "Event": true,
     "XMLHttpRequest": true,
+    "XDomainRequest": true,
     "EventTarget": true
   }
 }

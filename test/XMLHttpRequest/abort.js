@@ -2,7 +2,7 @@ var test = require('tape');
 
 var XMLHttpRequest = require('../../lib/XMLHttpRequest/');
 
-test('abort sets response to error when state > UNSENT and send() flag is true', function(t) {
+test('xhr.abort() sets response to error when state > UNSENT and send() flag is true', function(t) {
   var xhr = new XMLHttpRequest();
   xhr.open('POST', '/');
   xhr.send();
@@ -16,7 +16,7 @@ test('abort sets response to error when state > UNSENT and send() flag is true',
   t.end();
 });
 
-test('abort sets readystate to DONE when state > UNSENT and send() flag is true', function(t) {
+test('xhr.abort() sets readystate to DONE when state > UNSENT and send() flag is true', function(t) {
   var xhr = new XMLHttpRequest();
   xhr.open('POST', '/');
   xhr.send();
@@ -29,7 +29,7 @@ test('abort sets readystate to DONE when state > UNSENT and send() flag is true'
   t.end();
 });
 
-test('abort sends a readystatechange event when state > UNSENT and send() flag is true', function(t) {
+test('xhr.abort() sends a readystatechange event when state > UNSENT and send() flag is true', function(t) {
   t.plan(1);
 
   var sinon = require('sinon');
@@ -62,7 +62,7 @@ test('abort sends a readystatechange event when state > UNSENT and send() flag i
   clock.restore();
 });
 
-test('abort dispatch ProgressEvent events when state > UNSENT and send() flag is true', function(t) {
+test('xhr.abort() dispatch ProgressEvent events when state > UNSENT and send() flag is true', function(t) {
   t.plan(3);
 
   var sinon = require('sinon');
@@ -123,7 +123,7 @@ test('abort dispatch ProgressEvent events when state > UNSENT and send() flag is
   clock.restore();
 });
 
-test('abort resets the xhr properties', function(t) {
+test('xhr.abort() resets the xhr properties', function(t) {
   var xhr = new XMLHttpRequest();
   xhr.abort();
 

@@ -2,13 +2,13 @@ var test = require('tape');
 
 var XMLHttpRequest = require('../../lib/XMLHttpRequest/');
 
-test('send throws when state is not OPENED', function(t) {
+test('xhr.send() throws when state is not OPENED', function(t) {
   var xhr = new XMLHttpRequest();
   t.throws(xhr.send.bind(xhr), Error, 'State is not OPENED');
   t.end();
 });
 
-test('send throws when send() flag is set', function(t) {
+test('xhr.send() throws when send() flag is set', function(t) {
   var xhr = new XMLHttpRequest();
   xhr.open('GET', '/');
   xhr.sendFlag = true;
@@ -16,7 +16,7 @@ test('send throws when send() flag is set', function(t) {
   t.end();
 });
 
-test('send forces UTF-8 charset when body is not null', function(t) {
+test('xhr.send() forces UTF-8 charset when body is not null', function(t) {
   var xhr = new XMLHttpRequest();
   xhr.open('POST', '/yaw');
   xhr.setRequestHeader('Content-Type', 'text/yaw; charset=utf-9');
@@ -26,7 +26,7 @@ test('send forces UTF-8 charset when body is not null', function(t) {
   t.end();
 });
 
-test('send sets default `Content-Type` when none set', function(t) {
+test('xhr.send() sets default `Content-Type` when none set', function(t) {
   var xhr = new XMLHttpRequest();
   xhr.open('POST', '/yaw');
   xhr.send('Hello!');
@@ -35,7 +35,7 @@ test('send sets default `Content-Type` when none set', function(t) {
   t.end();
 });
 
-test('send sets requestBody', function(t) {
+test('xhr.send() sets requestBody', function(t) {
   var xhr = new XMLHttpRequest();
   xhr.open('POST', '/yaw');
   xhr.send('Hello!');
@@ -44,7 +44,7 @@ test('send sets requestBody', function(t) {
   t.end();
 });
 
-test('send sets requestBody to null when GET or HEAD', function(t) {
+test('xhr.send() sets requestBody to null when GET or HEAD', function(t) {
   t.plan(2);
 
   var methods = ['GET', 'HEAD'];
@@ -59,7 +59,7 @@ test('send sets requestBody to null when GET or HEAD', function(t) {
   });
 });
 
-test('send fires a loadstart event', function(t) {
+test('xhr.send() fires a loadstart event', function(t) {
   t.plan(1);
 
   var sinon = require('sinon');

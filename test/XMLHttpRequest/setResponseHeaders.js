@@ -2,13 +2,21 @@ var test = require('tape');
 
 var XMLHttpRequest = require('../../lib/XMLHttpRequest/');
 
-test('setResponseHeaders throws when state is not open', function(t) {
+test('xhr.setResponseHeaders() throws when no headers given', function(t) {
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', '/');
+  xhr.send('/');
+  t.throws(xhr.setResponseHeaders.bind(xhr), Error);
+  t.end();
+});
+
+test('xhr.setResponseHeaders() throws when state is not open', function(t) {
   var xhr = new XMLHttpRequest();
   t.throws(xhr.setResponseHeaders.bind(xhr), Error, 'State is not OPENED');
   t.end();
 });
 
-test('setResponseHeaders throws when send() flag is unset', function(t) {
+test('xhr.setResponseHeaders() throws when send() flag is unset', function(t) {
   var xhr = new XMLHttpRequest();
   t.throws(xhr.setResponseHeaders.bind(xhr), Error, 'State is not OPENED');
   xhr.open('GET', '/');
@@ -16,7 +24,7 @@ test('setResponseHeaders throws when send() flag is unset', function(t) {
   t.end();
 });
 
-test('setResponseHeaders sets response headers', function(t) {
+test('xhr.setResponseHeaders() sets response headers', function(t) {
   var xhr = new XMLHttpRequest();
   xhr.open('GET', '/');
   xhr.send();
@@ -32,18 +40,18 @@ test('setResponseHeaders sets response headers', function(t) {
   t.end();
 });
 
-test('setResponseHeaders sets readyState to HEADERS_RECEIVED (2)', function(t) {
+test('xhr.setResponseHeaders() sets readyState to HEADERS_RECEIVED (2)', function(t) {
   var xhr = new XMLHttpRequest();
   xhr.open('GET', '/');
   xhr.send();
 
-  xhr.setResponseHeaders();
+  xhr.setResponseHeaders({});
 
   t.equal(xhr.readyState, 2, 'readyState is HEADERS_RECEIVED');
   t.end();
 });
 
-test('setResponseHeaders fires a readystatechange event', function(t) {
+test('xhr.setResponseHeaders() fires a readystatechange event', function(t) {
   t.plan(1);
 
   var sinon = require('sinon');
@@ -68,7 +76,7 @@ test('setResponseHeaders fires a readystatechange event', function(t) {
     t.deepEqual(e, expectedEvent, 'event matches');
   };
 
-  xhr.setResponseHeaders();
+  xhr.setResponseHeaders({});
 
   t.end();
 });

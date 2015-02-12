@@ -3,20 +3,29 @@ var test = require('tape');
 var XMLHttpRequest = require('../../lib/XMLHttpRequest/');
 var support = require('../../lib/support');
 
-test('setResponseBody throws when state is not OPEN', function(t) {
+test('xhr.setResponseBody() throws when body is not a String', function(t) {
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', '/');
+  xhr.send();
+  xhr.setResponseHeaders({});
+  t.throws(xhr.setResponseBody.bind(xhr, 30), Error, 'Body is not a string');
+  t.end();
+});
+
+test('xhr.setResponseBody() throws when state is not OPEN', function(t) {
   var xhr = new XMLHttpRequest();
   t.throws(xhr.setResponseBody.bind(xhr, 'boom'), Error, 'State is < OPENED');
   t.end();
 });
 
-test('setResponseBody throws when send() flag is unset', function(t) {
+test('xhr.setResponseBody() throws when send() flag is unset', function(t) {
   var xhr = new XMLHttpRequest();
   xhr.open('GET', '/');
   t.throws(xhr.setResponseBody.bind(xhr, 'boom'), Error, 'Send() flag is unset');
   t.end();
 });
 
-test('setResponseBody throws when state is not HEADERS_RECEIVED', function(t) {
+test('xhr.setResponseBody() throws when state is not HEADERS_RECEIVED', function(t) {
   var xhr = new XMLHttpRequest();
   xhr.open('GET', '/');
   xhr.send();
@@ -24,27 +33,18 @@ test('setResponseBody throws when state is not HEADERS_RECEIVED', function(t) {
   t.end();
 });
 
-test('setResponseBody throws when body is not a String', function(t) {
-  var xhr = new XMLHttpRequest();
-  xhr.open('GET', '/');
-  xhr.send();
-  xhr.setResponseHeaders();
-  t.throws(xhr.setResponseBody.bind(xhr, 30), Error, 'Body is not a string');
-  t.end();
-});
-
-test('setResponseBody sends readystatechange event with a LOADING readyState every 10 bytes', function(t) {
-  t.plan(4);
+test('xhr.setResponseBody() sends readystatechange event with a LOADING readyState every 10 bytes', function(t) {
+  t.plan(6);
 
   var sinon = require('sinon');
   var clock = sinon.useFakeTimers();
   clock.tick(500);
 
-  var body = (new Array(20)).join();
+  var body = (new Array(21)).join();
   var xhr = new XMLHttpRequest();
   xhr.open('GET', '/');
   xhr.send();
-  xhr.setResponseHeaders();
+  xhr.setResponseHeaders({});
 
   var receivedEvents = 0;
 
@@ -70,6 +70,7 @@ test('setResponseBody sends readystatechange event with a LOADING readyState eve
     t.deepEqual(e, expectedEvents[receivedEvents], 'event matches');
     t.equal(e.target.readyState, 3, 'readyState is LOADING');
     receivedEvents++;
+    t.equal(xhr.responseText.length, receivedEvents * 10, 'content length updated');
     if (receivedEvents === 2) {
       xhr.onreadystatechange = function() {};
     }
@@ -79,11 +80,11 @@ test('setResponseBody sends readystatechange event with a LOADING readyState eve
   clock.restore();
 });
 
-test('setResponseBody sends readystatechange event with a DONE readyState when finished', function(t) {
+test('xhr.setResponseBody() sends readystatechange event with a DONE readyState when finished', function(t) {
   var xhr = new XMLHttpRequest();
   xhr.open('GET', '/');
   xhr.send();
-  xhr.setResponseHeaders();
+  xhr.setResponseHeaders({});
 
   var receivedEvents = [];
 
@@ -98,11 +99,11 @@ test('setResponseBody sends readystatechange event with a DONE readyState when f
   t.end();
 });
 
-test('setResponseBody sets responseText', function(t) {
+test('xhr.setResponseBody() sets responseText', function(t) {
   var xhr = new XMLHttpRequest();
   xhr.open('GET', '/');
   xhr.send();
-  xhr.setResponseHeaders();
+  xhr.setResponseHeaders({});
   xhr.setResponseBody('DAWG');
 
   t.equal(xhr.responseText, 'DAWG', 'responseText matches');
@@ -110,11 +111,11 @@ test('setResponseBody sets responseText', function(t) {
 });
 
 if (support.response) {
-  test('setResponseBody sets response', function(t) {
+  test('xhr.setResponseBody() sets response', function(t) {
     var xhr = new XMLHttpRequest();
     xhr.open('GET', '/');
     xhr.send();
-    xhr.setResponseHeaders();
+    xhr.setResponseHeaders({});
     xhr.setResponseBody('DAWG');
 
     t.equal(xhr.response, 'DAWG', 'response matches');
@@ -123,12 +124,12 @@ if (support.response) {
 }
 
 if (support.response) {
-  test('setResponseBody understand responseType=json', function(t) {
+  test('xhr.setResponseBody() understand responseType=json', function(t) {
     var xhr = new XMLHttpRequest();
     xhr.open('GET', '/');
     xhr.responseType = 'json';
     xhr.send();
-    xhr.setResponseHeaders();
+    xhr.setResponseHeaders({});
     xhr.setResponseBody('{"yaw": "dawg"}');
 
     t.deepEqual(xhr.response, {

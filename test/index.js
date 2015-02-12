@@ -3,12 +3,15 @@
 window.addEventListener('load', run);
 
 function run() {
-  var bulkRequire = require('bulk-require');
+
   var support = require('../lib/support');
 
+  if (support.hasXDomainRequest) {
+    require('./XDomainRequest/');
+  }
+
   if (support.hasXMLHttpRequest) {
-    // launch XMLHttpRequest test suite
-    bulkRequire(__dirname, ['XMLHttpRequest/*.js']);
+    require('./XMLHttpRequest/');
   }
 
   var test = require('tape');
@@ -47,6 +50,21 @@ function run() {
       xhr.respond(200, {}, 'WO!');
       t.equal(1, fauxJax.requests.length, 'We intercepted one xhr');
       t.equal('WO!', xhr.responseText, 'xhr.respond() call worked');
+      fauxJax.restore();
+      t.equal(0, fauxJax.requests.length, 'fauxJax.restore() resets fauxJax.requests to []');
+      t.end();
+    });
+  }
+
+  if (support.hasXDomainRequest) {
+    test('fauxJax intercepts XDomainRequests', function(t) {
+      fauxJax.install();
+      var xdr = new XDomainRequest();
+      xdr.open('GET', '/fo1pf1');
+      xdr.send();
+      xdr.respond(200, {}, 'WO!');
+      t.equal(1, fauxJax.requests.length, 'We intercepted one xdr');
+      t.equal('WO!', xdr.responseText, 'xdr.respond() call worked');
       fauxJax.restore();
       t.equal(0, fauxJax.requests.length, 'fauxJax.restore() resets fauxJax.requests to []');
       t.end();

@@ -2,19 +2,19 @@ var test = require('tape');
 
 var XMLHttpRequest = require('../../lib/XMLHttpRequest/');
 
-test('open throws when method not a string', function(t) {
+test('xhr.open() throws when method not a string', function(t) {
   var xhr = new XMLHttpRequest();
   t.throws(xhr.open.bind(xhr, 421), SyntaxError, 'Bad method type throws SyntaxError');
   t.end();
 });
 
-test('open throws when method unknown', function(t) {
+test('xhr.open() throws when method unknown', function(t) {
   var xhr = new XMLHttpRequest();
   t.throws(xhr.open.bind(xhr, 'PLURK'), SyntaxError, 'Bad method name throws SyntaxError');
   t.end();
 });
 
-test('open accepts uppercase methods', function(t) {
+test('xhr.open() accepts uppercase methods', function(t) {
   var methods = ['GET', 'HEAD', 'POST', 'DELETE', 'OPTIONS', 'PUT', 'CONNECT', 'TRACE', 'TRACK'];
   t.plan(methods.length);
 
@@ -24,7 +24,7 @@ test('open accepts uppercase methods', function(t) {
   });
 });
 
-test('open normalizes lowercase methods', function(t) {
+test('xhr.open() normalizes lowercase methods', function(t) {
   var methods = ['get', 'head', 'post', 'delete', 'options', 'put'];
   t.plan(methods.length * 2);
 
@@ -35,7 +35,7 @@ test('open normalizes lowercase methods', function(t) {
   });
 });
 
-test('open throws on no-uppercase forbidden methods (no auto normalization)', function(t) {
+test('xhr.open() throws on no-uppercase forbidden methods (no auto normalization)', function(t) {
   var methods = ['connect', 'trace', 'track'];
 
   t.plan(methods.length);
@@ -46,7 +46,7 @@ test('open throws on no-uppercase forbidden methods (no auto normalization)', fu
   });
 });
 
-test('open initialize properties', function(t) {
+test('xhr.open() initialize properties', function(t) {
   var xhr = new XMLHttpRequest();
   xhr.open('poSt', '/lol.gif');
 
@@ -59,7 +59,7 @@ test('open initialize properties', function(t) {
   t.end();
 });
 
-test('open fires a `readystatechange` event', function(t) {
+test('xhr.open() fires a `readystatechange` event', function(t) {
   t.plan(1);
   var sinon = require('sinon');
 
