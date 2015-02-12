@@ -78,5 +78,6 @@ test('xhr.setResponseHeaders() fires a readystatechange event', function(t) {
 
   xhr.setResponseHeaders({});
 
+  clock.restore();
   t.end();
 });

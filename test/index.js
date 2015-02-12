@@ -1,9 +1,11 @@
-// we wait for window load because __zuul makes ajax requests itself
+// we wait for dom ready because __zuul makes ajax requests itself
 // otherwise we intercept them too
-window.addEventListener('load', run);
+
+var domready = require('domready');
+
+domready(run);
 
 function run() {
-
   var support = require('../lib/support');
 
   var bulkRequire = require('bulk-require');
