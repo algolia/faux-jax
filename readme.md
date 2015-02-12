@@ -1,9 +1,16 @@
-# faux-jax
+# faux-jax <sup>[![Version Badge][npm-version-svg]][package-url]</sup>
 
-Intercept Ajax requests and respond to them. Dedicated to testing Ajax dependent
-JavaScript applications.
+[![Build Status][travis-svg]][travis-url]
+[![dependency status][deps-svg]][deps-url]
+[![dev dependency status][dev-deps-svg]][dev-deps-url]
+[![License][license-image]][license-url]
+[![Downloads][downloads-image]][downloads-url]
 
-We intercept [XMLHttpRequest](https://xhr.spec.whatwg.org/) and
+Intercept Ajax requests and respond to them.
+
+Dedicated to testing Ajax dependent JavaScript applications.
+
+We intercept both [XMLHttpRequest](https://xhr.spec.whatwg.org/) and
 [XDomainRequest](https://msdn.microsoft.com/en-us/library/ie/cc288060(v=vs.85).aspx)
 requests in [compatible environments](#how).
 
@@ -60,13 +67,15 @@ All requests have the native properties/methods from [the spec](https://xhr.spec
 
 We also added a couple of handy properties/methods for you to ease testing.
 
-### request.requestUrl
+### request.requestMethod
+
+### request.requestURL
 
 ### request.requestHeaders
 
-### request.requestBody
+Always `{}` with `XDomainRequest`.
 
-### request.responseHeaders
+### request.requestBody
 
 ### request.respond(status, [headers], [body])
 
@@ -103,3 +112,17 @@ npm run lint
 ```
 
 Uses [eslint](http://eslint.org/), see [.eslintrc](./.eslintrc).
+
+[package-url]: https://npmjs.org/package/faux-jax
+[npm-version-svg]: http://vb.teelaun.ch/algolia/faux-jax.svg
+[travis-svg]: https://img.shields.io/travis/algolia/faux-jax.svg?style=flat-square
+[travis-url]: https://travis-ci.org/algolia/faux-jax
+[deps-svg]: https://img.shields.io/david/algolia/faux-jax.svg?style=flat-square
+[deps-url]: https://david-dm.org/algolia/faux-jax
+[dev-deps-svg]: https://img.shields.io/david/dev/algolia/faux-jax.svg?style=flat-square
+[dev-deps-url]: https://david-dm.org/algolia/faux-jax#info=devDependencies
+[license-image]: http://img.shields.io/npm/l/faux-jax.svg?style=flat-square
+[license-url]: LICENSE
+[downloads-image]: https://img.shields.io/npm/dm/faux-jax.svg?style=flat-square
+[downloads-url]: http://npm-stat.com/charts.html?package=faux-jax
+
