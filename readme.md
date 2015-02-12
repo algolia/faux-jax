@@ -31,8 +31,8 @@ xhr.setRequestHeader('Content-Type', 'application/json');
 xhr.send(
   JSON.stringify({
     YAW: 'dawg'
-  }
-));
+  })
+);
 
 xhr.respond(
   200, {
@@ -91,7 +91,7 @@ Sets back global `XMLHttpRequest` and `XDomainRequest` to native implementations
 
 tl;dr; We try to be as close as possible to the mocked native environement.
 
-`faux-jax` uses [feature detection](./support) to only expose what's relevant for the current environment.
+`faux-jax` uses [feature detection](./lib/support) to only expose what's relevant for the current environment.
 
 i.e. on Chrome, we do not intercept nor expose `XDomainRequest`.
 
