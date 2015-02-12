@@ -1,16 +1,18 @@
+var bind = require('lodash-compat/function/bind');
+var forEach = require('lodash-compat/collection/forEach');
 var test = require('tape');
 
 var XMLHttpRequest = require('../../lib/XMLHttpRequest/');
 
 test('xhr.open() throws when method not a string', function(t) {
   var xhr = new XMLHttpRequest();
-  t.throws(xhr.open.bind(xhr, 421), SyntaxError, 'Bad method type throws SyntaxError');
+  t.throws(bind(xhr.open, xhr, 421), SyntaxError, 'Bad method type throws SyntaxError');
   t.end();
 });
 
 test('xhr.open() throws when method unknown', function(t) {
   var xhr = new XMLHttpRequest();
-  t.throws(xhr.open.bind(xhr, 'PLURK'), SyntaxError, 'Bad method name throws SyntaxError');
+  t.throws(bind(xhr.open, xhr, 'PLURK'), SyntaxError, 'Bad method name throws SyntaxError');
   t.end();
 });
 
@@ -18,9 +20,9 @@ test('xhr.open() accepts uppercase methods', function(t) {
   var methods = ['GET', 'HEAD', 'POST', 'DELETE', 'OPTIONS', 'PUT', 'CONNECT', 'TRACE', 'TRACK'];
   t.plan(methods.length);
 
-  methods.forEach(function(method) {
+  forEach(methods, function(method) {
     var xhr = new XMLHttpRequest();
-    t.doesNotThrow(xhr.open.bind(xhr, method), 'Uppercase accepted methods does not throws');
+    t.doesNotThrow(bind(xhr.open, xhr, method), 'Uppercase accepted methods does not throws');
   });
 });
 
@@ -28,9 +30,9 @@ test('xhr.open() normalizes lowercase methods', function(t) {
   var methods = ['get', 'head', 'post', 'delete', 'options', 'put'];
   t.plan(methods.length * 2);
 
-  methods.forEach(function(method) {
+  forEach(methods, function(method) {
     var xhr = new XMLHttpRequest();
-    t.doesNotThrow(xhr.open.bind(xhr, method), 'Lowercased accepted methods does not throws');
+    t.doesNotThrow(bind(xhr.open, xhr, method), 'Lowercased accepted methods does not throws');
     t.equal(xhr.requestMethod, method.toUpperCase(), 'Method name was lowercased');
   });
 });
@@ -40,9 +42,9 @@ test('xhr.open() throws on no-uppercase forbidden methods (no auto normalization
 
   t.plan(methods.length);
 
-  methods.forEach(function(method) {
+  forEach(methods, function(method) {
     var xhr = new XMLHttpRequest();
-    t.throws(xhr.open.bind(xhr, method), Error);
+    t.throws(bind(xhr.open, xhr, method), Error);
   });
 });
 

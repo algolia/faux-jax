@@ -1,3 +1,4 @@
+var forEach = require('lodash-compat/collection/forEach');
 var test = require('tape');
 
 var XMLHttpRequest = require('../../lib/XMLHttpRequest/');
@@ -110,7 +111,7 @@ test('xhr.abort() dispatch ProgressEvent events when state > UNSENT and send() f
     type: 'loadend'
   }];
 
-  expectedEvents.forEach(function checkReceivedEvents(expectedEvent) {
+  forEach(expectedEvents, function checkReceivedEvents(expectedEvent) {
     xhr['on' + expectedEvent.type] = function(e) {
       t.deepEqual(e, expectedEvent, 'event matches');
     };

@@ -1,11 +1,13 @@
+var bind = require('lodash-compat/function/bind');
 var test = require('tape');
+
 var XDomainRequest = require('../../lib/XDomainRequest/');
 
 test('xdr.send() throws when body is not a string', function(t) {
   var xdr = new XDomainRequest();
 
   xdr.open('POST', '/');
-  t.throws(xdr.send.bind(xdr, 9), Error, 'cannot set a body to non-string');
+  t.throws(bind(xdr.send, 9), Error, 'cannot set a body to non-string');
   t.end();
 });
 

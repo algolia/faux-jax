@@ -1,14 +1,15 @@
+var bind = require('lodash-compat/function/bind');
 var test = require('tape');
 
 var XDomainRequest = require('../../lib/XDomainRequest/');
 
 test('xdr.setResponseHeaders() throws when request not sent', function(t) {
   var xdr = new XDomainRequest();
-  t.throws(xdr.setResponseHeaders.bind(xdr), Error);
+  t.throws(bind(xdr.setResponseHeaders, xdr), Error);
   xdr.open('GET', '/');
-  t.throws(xdr.setResponseHeaders.bind(xdr), Error);
+  t.throws(bind(xdr.setResponseHeaders, xdr), Error);
   xdr.send();
-  t.doesNotThrow(xdr.setResponseHeaders.bind(xdr, {}));
+  t.doesNotThrow(bind(xdr.setResponseHeaders, xdr, {}));
   t.end();
 });
 
@@ -16,7 +17,7 @@ test('xdr.setResponseHeaders() throws when no headers given', function(t) {
   var xdr = new XDomainRequest();
   xdr.open('GET', '/');
   xdr.send('/');
-  t.throws(xdr.setResponseHeaders.bind(xdr), Error, 'no headers given');
+  t.throws(bind(xdr.setResponseHeaders, xdr), Error, 'no headers given');
   t.end();
 });
 

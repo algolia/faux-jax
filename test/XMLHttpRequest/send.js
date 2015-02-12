@@ -1,10 +1,12 @@
+var bind = require('lodash-compat/function/bind');
+var forEach = require('lodash-compat/collection/forEach');
 var test = require('tape');
 
 var XMLHttpRequest = require('../../lib/XMLHttpRequest/');
 
 test('xhr.send() throws when state is not OPENED', function(t) {
   var xhr = new XMLHttpRequest();
-  t.throws(xhr.send.bind(xhr), Error, 'State is not OPENED');
+  t.throws(bind(xhr.send, xhr), Error, 'State is not OPENED');
   t.end();
 });
 
@@ -12,7 +14,7 @@ test('xhr.send() throws when send() flag is set', function(t) {
   var xhr = new XMLHttpRequest();
   xhr.open('GET', '/');
   xhr.sendFlag = true;
-  t.throws(xhr.send.bind(xhr), Error, 'send() flag is true');
+  t.throws(bind(xhr.send, xhr), Error, 'send() flag is true');
   t.end();
 });
 
@@ -50,7 +52,7 @@ test('xhr.send() sets requestBody to null when GET or HEAD', function(t) {
   var methods = ['GET', 'HEAD'];
   var body = 'YAW!';
 
-  methods.forEach(function(methodName) {
+  forEach(methods, function(methodName) {
     var xhr = new XMLHttpRequest();
     xhr.open(methodName, '/HAI');
     xhr.send(body);

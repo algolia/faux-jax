@@ -1,3 +1,4 @@
+var bind = require('lodash-compat/function/bind');
 var test = require('tape');
 
 var XMLHttpRequest = require('../../lib/XMLHttpRequest/');
@@ -8,20 +9,20 @@ test('xhr.setResponseBody() throws when body is not a String', function(t) {
   xhr.open('GET', '/');
   xhr.send();
   xhr.setResponseHeaders({});
-  t.throws(xhr.setResponseBody.bind(xhr, 30), Error, 'Body is not a string');
+  t.throws(bind(xhr.setResponseBody, xhr, 30), Error, 'Body is not a string');
   t.end();
 });
 
 test('xhr.setResponseBody() throws when state is not OPEN', function(t) {
   var xhr = new XMLHttpRequest();
-  t.throws(xhr.setResponseBody.bind(xhr, 'boom'), Error, 'State is < OPENED');
+  t.throws(bind(xhr.setResponseBody, xhr, 'boom'), Error, 'State is < OPENED');
   t.end();
 });
 
 test('xhr.setResponseBody() throws when send() flag is unset', function(t) {
   var xhr = new XMLHttpRequest();
   xhr.open('GET', '/');
-  t.throws(xhr.setResponseBody.bind(xhr, 'boom'), Error, 'Send() flag is unset');
+  t.throws(bind(xhr.setResponseBody, xhr, 'boom'), Error, 'Send() flag is unset');
   t.end();
 });
 
@@ -29,7 +30,7 @@ test('xhr.setResponseBody() throws when state is not HEADERS_RECEIVED', function
   var xhr = new XMLHttpRequest();
   xhr.open('GET', '/');
   xhr.send();
-  t.throws(xhr.setResponseBody.bind(xhr, 'boom'), Error, 'State is < HEADERS_RECEIVED');
+  t.throws(bind(xhr.setResponseBody, xhr, 'boom'), Error, 'State is < HEADERS_RECEIVED');
   t.end();
 });
 

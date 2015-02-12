@@ -1,3 +1,4 @@
+var bind = require('lodash-compat/function/bind');
 var test = require('tape');
 
 var XDomainRequest = require('../../lib/XDomainRequest/');
@@ -7,19 +8,19 @@ test('xdr.setResponseBody() throws when no body', function(t) {
   xdr.open('GET', '/');
   xdr.send();
   xdr.setResponseHeaders({});
-  t.throws(xdr.setResponseBody.bind(xdr), Error, 'Body is missing');
+  t.throws(bind(xdr.setResponseBody, xdr), Error, 'Body is missing');
   t.end();
 });
 
 test('xdr.setResponseBody() throws when request not sent', function(t) {
   t.plan(3);
   var xdr = new XDomainRequest();
-  t.throws(xdr.setResponseBody.bind(xdr), Error);
+  t.throws(bind(xdr.setResponseBody, xdr), Error);
   xdr.open('GET', '/');
-  t.throws(xdr.setResponseBody.bind(xdr), Error);
+  t.throws(bind(xdr.setResponseBody, xdr), Error);
   xdr.send();
   xdr.setResponseHeaders({});
-  t.doesNotThrow(xdr.setResponseBody.bind(xdr, ''));
+  t.doesNotThrow(bind(xdr.setResponseBody, xdr, ''));
 });
 
 test('xdr.setResponseBody() throws when xdr.setResponseHeaders() not called', function(t) {
@@ -27,7 +28,7 @@ test('xdr.setResponseBody() throws when xdr.setResponseHeaders() not called', fu
   var xdr = new XDomainRequest();
   xdr.open('GET', '/');
   xdr.send('/');
-  t.throws(xdr.setResponseBody.bind(xdr, ''));
+  t.throws(bind(xdr.setResponseBody, xdr, ''));
 });
 
 test('xdr.setResponseBody throws when body is not a String', function(t) {
@@ -35,7 +36,7 @@ test('xdr.setResponseBody throws when body is not a String', function(t) {
   xdr.open('GET', '/');
   xdr.send();
   xdr.setResponseHeaders({});
-  t.throws(xdr.setResponseBody.bind(xdr, 30), Error, 'Body is not a string');
+  t.throws(bind(xdr.setResponseBody, xdr, 30), Error, 'Body is not a string');
   t.end();
 });
 

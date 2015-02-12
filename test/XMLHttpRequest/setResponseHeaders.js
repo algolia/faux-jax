@@ -1,3 +1,4 @@
+var bind = require('lodash-compat/function/bind');
 var test = require('tape');
 
 var XMLHttpRequest = require('../../lib/XMLHttpRequest/');
@@ -6,21 +7,21 @@ test('xhr.setResponseHeaders() throws when no headers given', function(t) {
   var xhr = new XMLHttpRequest();
   xhr.open('GET', '/');
   xhr.send('/');
-  t.throws(xhr.setResponseHeaders.bind(xhr), Error);
+  t.throws(bind(xhr.setResponseHeaders, xhr), Error);
   t.end();
 });
 
 test('xhr.setResponseHeaders() throws when state is not open', function(t) {
   var xhr = new XMLHttpRequest();
-  t.throws(xhr.setResponseHeaders.bind(xhr), Error, 'State is not OPENED');
+  t.throws(bind(xhr.setResponseHeaders, xhr), Error, 'State is not OPENED');
   t.end();
 });
 
 test('xhr.setResponseHeaders() throws when send() flag is unset', function(t) {
   var xhr = new XMLHttpRequest();
-  t.throws(xhr.setResponseHeaders.bind(xhr), Error, 'State is not OPENED');
+  t.throws(bind(xhr.setResponseHeaders, xhr), Error, 'State is not OPENED');
   xhr.open('GET', '/');
-  t.throws(xhr.setResponseHeaders.bind(xhr), Error, 'Send() flag is unset');
+  t.throws(bind(xhr.setResponseHeaders, xhr), Error, 'Send() flag is unset');
   t.end();
 });
 
