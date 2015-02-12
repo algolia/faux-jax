@@ -6,12 +6,14 @@ function run() {
 
   var support = require('../lib/support');
 
+  var bulkRequire = require('bulk-require');
+
   if (support.hasXDomainRequest) {
-    require('./XDomainRequest/');
+    bulkRequire(__dirname, ['./XDomainRequest/*.js']);
   }
 
   if (support.hasXMLHttpRequest) {
-    require('./XMLHttpRequest/');
+    bulkRequire(__dirname, ['./XMLHttpRequest/*.js']);
   }
 
   var test = require('tape');
