@@ -10,8 +10,6 @@ browsers:
     version: 9..11
   - name: safari
     version: 5..latest
-  - name: opera
-    version: 27..latest
   - name: iphone
     version: 5.0..latest
   - name: ipad
