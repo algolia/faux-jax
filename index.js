@@ -43,4 +43,4 @@ function FakeXDR() {
   fauxJax.requests.push(this);
 }
 
-inherits(FakeXDR, XMLHttpRequest);
+inherits(FakeXDR, XDomainRequest);
