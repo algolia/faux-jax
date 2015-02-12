@@ -1,6 +1,7 @@
 // we wait for dom ready because __zuul makes ajax requests itself
 // otherwise we intercept them too
-
+// we use domready@0.3.0 specifically to be compatible
+// with ie6/7/8
 var domready = require('domready');
 
 domready(run);
@@ -53,7 +54,7 @@ function run() {
       xhr.send();
       xhr.respond(200, {}, 'WO!');
       t.equal(1, fauxJax.requests.length, 'We intercepted one xhr');
-      t.equal('WO!', xhr.responseText, 'xhr.respond() call worked');
+      t.equal('WO!', xhr.responseText, 'xhr.respond() call worked, body matches');
       fauxJax.restore();
       t.equal(0, fauxJax.requests.length, 'fauxJax.restore() resets fauxJax.requests to []');
       t.end();
