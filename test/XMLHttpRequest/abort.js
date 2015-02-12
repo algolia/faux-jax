@@ -1,20 +1,24 @@
 var test = require('tape');
 
 var XMLHttpRequest = require('../../lib/XMLHttpRequest/');
+var support = require('../../lib/support');
 
-test('xhr.abort() sets response to error when state > UNSENT and send() flag is true', function(t) {
-  var xhr = new XMLHttpRequest();
-  xhr.open('POST', '/');
-  xhr.send();
+if (support.response) {
+  test('xhr.abort() sets response to error when state > UNSENT and send() flag is true', function(t) {
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', '/');
+    xhr.send();
 
-  // simulate response
-  xhr.readyState = 2;
-  xhr.abort();
+    // simulate response
+    xhr.readyState = 2;
+    xhr.abort();
 
-  t.ok(xhr.response instanceof Error, 'response is an Error');
-  t.equal(xhr.response.message, 'NetworkError', 'Message is NetworkError');
-  t.end();
-});
+    t.ok(xhr.response instanceof Error, 'response is an Error');
+    t.equal(xhr.response.message, 'NetworkError', 'Message is NetworkError');
+
+    t.end();
+  });
+}
 
 test('xhr.abort() sets readystate to DONE when state > UNSENT and send() flag is true', function(t) {
   var xhr = new XMLHttpRequest();
@@ -131,7 +135,11 @@ test('xhr.abort() resets the xhr properties', function(t) {
   t.equal(xhr.responseText, '');
   t.equal(xhr.responseXML, null);
   t.equal(xhr.readyState, 0);
-  t.equal(xhr.response, '');
+
+  if (support.response) {
+    t.equal(xhr.response, '');
+  }
+
   t.equal(xhr.responseURL, '');
   t.equal(xhr.status, 0);
   t.equal(xhr.statusText, '');
