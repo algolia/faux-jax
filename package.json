@@ -4,8 +4,10 @@
   "description": "Intercept Ajax requests and respond to them. Supports XMLHttpRequest and XDomainRequest. Close to the specs.",
   "main": "index.js",
   "scripts": {
+    "test": "echo 'use either npm run dev or npm run test-ci'",
+    "test-ci": "zuul test/index.js && npm run lint",
     "lint": "eslint --quiet .",
-    "dev": "zuul --local 8080 --ui tape test/index.js"
+    "dev": "zuul --local 8080 test/index.js"
   },
   "keywords": [
     "xhr",

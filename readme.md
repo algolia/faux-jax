@@ -1,8 +1,6 @@
-# faux-jax <sup>[![Version Badge][npm-version-svg]][package-url]</sup>
+# faux-jax <sup>[![Version Badge][npm-version-svg]][package-url]</sup> [![Build Status][travis-svg]][travis-url] [![License][license-image]][license-url] [![Downloads][downloads-image]][downloads-url]
 
-[![Build Status][travis-svg]][travis-url]
-[![License][license-image]][license-url]
-[![Downloads][downloads-image]][downloads-url]
+[![Browser tests][browser-test-matrix]][browser-test-url]
 
 Intercept and respond to Ajax requests.
 
@@ -111,6 +109,14 @@ npm run lint
 
 Uses [eslint](http://eslint.org/), see [.eslintrc](./.eslintrc).
 
+# Thanks
+
+Inspiration for this module came from:
+- Sinon.js's [Fake XMLHttpRequest](http://sinonjs.org/docs/#server)
+- trek's [FakeXMLHttpRequest](https://github.com/trek/FakeXMLHttpRequest)
+
+Many thanks!
+
 [package-url]: https://npmjs.org/package/faux-jax
 [npm-version-svg]: http://vb.teelaun.ch/algolia/faux-jax.svg
 [travis-svg]: https://img.shields.io/travis/algolia/faux-jax.svg?style=flat-square
@@ -119,4 +125,7 @@ Uses [eslint](http://eslint.org/), see [.eslintrc](./.eslintrc).
 [license-url]: LICENSE
 [downloads-image]: https://img.shields.io/npm/dm/faux-jax.svg?style=flat-square
 [downloads-url]: http://npm-stat.com/charts.html?package=faux-jax
+[browser-test-matrix]: https://saucelabs.com/browser-matrix/algolia-faux-jax.svg
+[browser-test-url]: https://saucelabs.com/u/algolia-faux-jax
+
 

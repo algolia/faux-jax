@@ -1,3 +1,26 @@
 ui: tape
+browsers:
+  - name: chrome
+    version: 39..dev
+    platform: Windows 2012 R2 # Win 8.1
+  - name: firefox
+    version: 35..latest
+    platform: Windows 2012 R2 # Win 8.1
+  - name: ie
+    version: 9..11
+  - name: safari
+    version: 4..latest
+  - name: opera
+    version: 27..latest
+  - name: iphone
+    version: 5.0..latest
+  - name: ipad
+    version: 5.0..latest
+  - name: android
+    version: 4.1..latest
 browserify:
+  # will inline bulk-require calls
+  # https://github.com/substack/bulkify
+  # https://github.com/substack/bulk-require
+  # see test/index.js for a concrete example
   - transform: bulkify

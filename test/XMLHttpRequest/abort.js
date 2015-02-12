@@ -131,18 +131,22 @@ test('xhr.abort() resets the xhr properties', function(t) {
   var xhr = new XMLHttpRequest();
   xhr.abort();
 
-  t.equal(xhr.responseType, '');
-  t.equal(xhr.responseText, '');
-  t.equal(xhr.responseXML, null);
-  t.equal(xhr.readyState, 0);
+  t.equal(xhr.responseType, '', 'responseType is an empty string');
+  t.equal(xhr.responseText, '', 'responseText is an empty string');
+  t.equal(xhr.responseXML, null, 'responseXML is null');
+  t.equal(xhr.readyState, 0, 'readyState is 0');
 
   if (support.response) {
-    t.equal(xhr.response, '');
+    t.equal(xhr.response, '', 'response is an empty string');
   }
 
-  t.equal(xhr.responseURL, '');
-  t.equal(xhr.status, 0);
-  t.equal(xhr.statusText, '');
-  t.equal(xhr.timeout, 0);
+  t.equal(xhr.responseURL, '', 'responseURL is an empty string');
+  t.equal(xhr.status, 0, 'status back to 0');
+  t.equal(xhr.statusText, '', 'statusText is an empty string');
+
+  if (support.timeout) {
+    t.equal(xhr.timeout, 0, 'timeout back to 0');
+  }
+
   t.end();
 });
