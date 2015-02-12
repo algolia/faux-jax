@@ -17,7 +17,7 @@
     "testing"
   ],
   "author": "Vincent Voyer <vincent.voyer@algolia.com>",
-  "license": "ISC",
+  "license": "MIT",
   "repository": "algolia/faux-jax",
   "devDependencies": {
     "bulk-require": "0.2.1",
