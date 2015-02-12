@@ -117,10 +117,6 @@ Uses [eslint](http://eslint.org/), see [.eslintrc](./.eslintrc).
 [npm-version-svg]: http://vb.teelaun.ch/algolia/faux-jax.svg
 [travis-svg]: https://img.shields.io/travis/algolia/faux-jax.svg
 [travis-url]: https://travis-ci.org/algolia/faux-jax
-[deps-svg]: https://img.shields.io/david/algolia/faux-jax.svg
-[deps-url]: https://david-dm.org/algolia/faux-jax
-[dev-deps-svg]: https://img.shields.io/david/dev/algolia/faux-jax.svg
-[dev-deps-url]: https://david-dm.org/algolia/faux-jax#info=devDependencies
 [license-image]: http://img.shields.io/npm/l/faux-jax.svg
 [license-url]: LICENSE
 [downloads-image]: https://img.shields.io/npm/dm/faux-jax.svg
