@@ -29,6 +29,6 @@ test('xdr.open() throws when bad method name', function(t) {
         xdr.requestMethod,
         methodName.toUpperCase(),
         'xdr.requestMethod was set to `' + xdr.requestMethod + '` (was ' + methodName + ')');
-      t.equal(xdr.requestUrl, '/', 'xdr.requestUrl was set to `/`');
+      t.equal(xdr.requestURL, '/', 'xdr.requestURL was set to `/`');
     });
   });

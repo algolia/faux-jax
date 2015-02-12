@@ -52,7 +52,7 @@ test('xhr.open() initialize properties', function(t) {
 
   t.equal(xhr.requestMethod, 'POST');
   t.equal(xhr.async, true);
-  t.equal(xhr.requestUrl, '/lol.gif');
+  t.equal(xhr.requestURL, '/lol.gif');
   t.equal(xhr.username, undefined);
   t.equal(xhr.password, undefined);
 

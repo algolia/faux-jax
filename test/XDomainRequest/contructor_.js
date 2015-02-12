@@ -24,7 +24,7 @@ test('XDomainRequest interface', function(t) {
   // properties
   t.equal(xdr.requestBody, null, 'requestBody is null');
   t.equal(xdr.requestMethod, null, 'requestMethod is null');
-  t.equal(xdr.requestUrl, null, 'requestUrl is null');
+  t.equal(xdr.requestURL, null, 'requestURL is null');
 
   // methods
   t.equal(typeof xdr.respond, 'function', 'There is a respond method');
