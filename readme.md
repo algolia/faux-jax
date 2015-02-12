@@ -6,9 +6,9 @@
 [![License][license-image]][license-url]
 [![Downloads][downloads-image]][downloads-url]
 
-Intercept Ajax requests and respond to them.
+Intercept and respond to Ajax requests.
 
-Dedicated to testing Ajax dependent JavaScript applications.
+Dedicated to testing Ajax-dependent JavaScript applications.
 
 We intercept both [XMLHttpRequest](https://xhr.spec.whatwg.org/) and
 [XDomainRequest](https://msdn.microsoft.com/en-us/library/ie/cc288060(v=vs.85).aspx)
