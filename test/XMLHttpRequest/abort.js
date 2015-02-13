@@ -35,12 +35,6 @@ test('xhr.abort() sets readystate to DONE when state > UNSENT and send() flag is
 });
 
 test('xhr.abort() sends a readystatechange event when state > UNSENT and send() flag is true', function(t) {
-  t.plan(1);
-
-  var sinon = require('sinon');
-  var clock = sinon.useFakeTimers();
-  clock.tick(500);
-
   var xhr = new XMLHttpRequest();
 
   xhr.open('GET', '/');
@@ -59,20 +53,23 @@ test('xhr.abort() sends a readystatechange event when state > UNSENT and send() 
     type: 'readystatechange'
   };
 
-  xhr.onreadystatechange = function(e) {
-    t.deepEqual(e, expectedEvent, 'event matches');
+  xhr.onreadystatechange = function(receivedEvent) {
+    receivedEvent.timestamp = 500;
+    t.equal(receivedEvent.bubbles, expectedEvent.bubbles);
+    t.equal(receivedEvent.cancelable, expectedEvent.cancelable);
+    t.equal(receivedEvent.currentTarget, expectedEvent.currentTarget);
+    t.equal(receivedEvent.eventPhase, expectedEvent.eventPhase);
+    t.equal(receivedEvent.target, expectedEvent.target);
+    t.equal(receivedEvent.timestamp, expectedEvent.timestamp);
+    t.equal(receivedEvent.type, expectedEvent.type);
+    t.end();
   };
 
   xhr.abort();
-  clock.restore();
 });
 
 test('xhr.abort() dispatch ProgressEvent events when state > UNSENT and send() flag is true', function(t) {
-  t.plan(3);
-
-  var sinon = require('sinon');
-  var clock = sinon.useFakeTimers();
-  clock.tick(500);
+  t.plan(21);
 
   var xhr = new XMLHttpRequest();
 
@@ -112,8 +109,15 @@ test('xhr.abort() dispatch ProgressEvent events when state > UNSENT and send() f
   }];
 
   forEach(expectedEvents, function checkReceivedEvents(expectedEvent) {
-    xhr['on' + expectedEvent.type] = function(e) {
-      t.deepEqual(e, expectedEvent, 'event matches');
+    xhr['on' + expectedEvent.type] = function(receivedEvent) {
+      receivedEvent.timestamp = expectedEvent.timestamp;
+      t.equal(receivedEvent.bubbles, expectedEvent.bubbles);
+      t.equal(receivedEvent.cancelable, expectedEvent.cancelable);
+      t.equal(receivedEvent.currentTarget, expectedEvent.currentTarget);
+      t.equal(receivedEvent.eventPhase, expectedEvent.eventPhase);
+      t.equal(receivedEvent.target, expectedEvent.target);
+      t.equal(receivedEvent.timestamp, expectedEvent.timestamp);
+      t.equal(receivedEvent.type, expectedEvent.type);
     };
   });
 
@@ -124,8 +128,6 @@ test('xhr.abort() dispatch ProgressEvent events when state > UNSENT and send() f
   xhr.readyState = 2;
 
   xhr.abort();
-
-  clock.restore();
 });
 
 test('xhr.abort() resets the xhr properties', function(t) {
@@ -141,7 +143,10 @@ test('xhr.abort() resets the xhr properties', function(t) {
     t.equal(xhr.response, '', 'response is an empty string');
   }
 
-  t.equal(xhr.responseURL, '', 'responseURL is an empty string');
+  if (support.responseURL) {
+    t.equal(xhr.responseURL, '', 'responseURL is an empty string');
+  }
+
   t.equal(xhr.status, 0, 'status back to 0');
   t.equal(xhr.statusText, '', 'statusText is an empty string');
 

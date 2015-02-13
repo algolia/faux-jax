@@ -62,12 +62,7 @@ test('xhr.send() sets requestBody to null when GET or HEAD', function(t) {
 });
 
 test('xhr.send() fires a loadstart event', function(t) {
-  t.plan(1);
-
-  var sinon = require('sinon');
-
-  var clock = sinon.useFakeTimers();
-  clock.tick(500);
+  t.plan(7);
 
   var xhr = new XMLHttpRequest();
 
@@ -84,12 +79,17 @@ test('xhr.send() fires a loadstart event', function(t) {
     type: 'loadstart'
   };
 
-  xhr.onloadstart = function(e) {
-    t.deepEqual(e, expectedEvent, 'Received an event through onloadstart=fn listener');
+  xhr.onloadstart = function(receivedEvent) {
+    receivedEvent.timestamp = expectedEvent.timestamp;
+    t.equal(receivedEvent.bubbles, expectedEvent.bubbles);
+    t.equal(receivedEvent.cancelable, expectedEvent.cancelable);
+    t.equal(receivedEvent.currentTarget, expectedEvent.currentTarget);
+    t.equal(receivedEvent.eventPhase, expectedEvent.eventPhase);
+    t.equal(receivedEvent.target, expectedEvent.target);
+    t.equal(receivedEvent.timestamp, expectedEvent.timestamp);
+    t.equal(receivedEvent.type, expectedEvent.type);
   };
 
   xhr.open('POST', '/yaw');
   xhr.send('Hello!');
-
-  clock.restore();
 });

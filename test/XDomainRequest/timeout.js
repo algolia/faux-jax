@@ -9,7 +9,7 @@ test('timeout is initialized at -1', function(t) {
 });
 
 test('when timeout has passed, we get a timeout event', function(t) {
-  t.plan(1);
+  t.plan(7);
 
   var sinon = require('sinon');
   var clock = sinon.useFakeTimers();
@@ -29,7 +29,14 @@ test('when timeout has passed, we get a timeout event', function(t) {
   };
 
   xdr.ontimeout = function(receivedEvent) {
-    t.deepEqual(receivedEvent, expectedEvent, 'We received a timeout event');
+    receivedEvent.timestamp = expectedEvent.timestamp;
+    t.equal(receivedEvent.bubbles, expectedEvent.bubbles);
+    t.equal(receivedEvent.cancelable, expectedEvent.cancelable);
+    t.equal(receivedEvent.currentTarget, expectedEvent.currentTarget);
+    t.equal(receivedEvent.eventPhase, expectedEvent.eventPhase);
+    t.equal(receivedEvent.target, expectedEvent.target);
+    t.equal(receivedEvent.timestamp, expectedEvent.timestamp);
+    t.equal(receivedEvent.type, expectedEvent.type);
     clock.restore();
   };
 

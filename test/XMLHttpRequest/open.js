@@ -62,11 +62,7 @@ test('xhr.open() initialize properties', function(t) {
 });
 
 test('xhr.open() fires a `readystatechange` event', function(t) {
-  t.plan(1);
-  var sinon = require('sinon');
-
-  var clock = sinon.useFakeTimers();
-  clock.tick(500);
+  t.plan(7);
 
   var xhr = new XMLHttpRequest();
 
@@ -80,11 +76,16 @@ test('xhr.open() fires a `readystatechange` event', function(t) {
     type: 'readystatechange'
   };
 
-  xhr.onreadystatechange = function(e) {
-    t.deepEqual(e, expectedEvent, 'Received an event through onreadystatechange=fn listener');
+  xhr.onreadystatechange = function(receivedEvent) {
+    receivedEvent.timestamp = expectedEvent.timestamp;
+    t.equal(receivedEvent.bubbles, expectedEvent.bubbles);
+    t.equal(receivedEvent.cancelable, expectedEvent.cancelable);
+    t.equal(receivedEvent.currentTarget, expectedEvent.currentTarget);
+    t.equal(receivedEvent.eventPhase, expectedEvent.eventPhase);
+    t.equal(receivedEvent.target, expectedEvent.target);
+    t.equal(receivedEvent.timestamp, expectedEvent.timestamp);
+    t.equal(receivedEvent.type, expectedEvent.type);
   };
 
   xhr.open('GET', '/google.gif');
-
-  clock.restore();
 });

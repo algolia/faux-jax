@@ -3,6 +3,9 @@
 // we use domready@0.3.0 specifically to be compatible
 // with ie6/7/8
 var domready = require('domready');
+var test = require('tape');
+
+var fauxJax = require('../');
 
 domready(run);
 
@@ -19,32 +22,33 @@ function run() {
     bulkRequire(__dirname, ['./XMLHttpRequest/*.js']);
   }
 
-  var test = require('tape');
-  var fauxJax = require('../');
-
   if (support.hasXMLHttpRequest) {
     test('nothing gets intercepted by default', function(t) {
       t.plan(2);
       var xhr = new XMLHttpRequest();
       xhr.open('GET', location.pathname);
-      xhr.send();
       if (support.addEventListener) {
-        t.pass('We used addEventListener');
         xhr.addEventListener('load', function() {
+          t.pass('We used addEventListener');
           t.ok(
             /faux\-jax/.test(xhr.responseText),
             'We got the current location content with ajax'
           );
         });
       } else {
-        xhr.onload = function() {
-          t.pass('We used onload=');
+        xhr.onreadystatechange = function() {
+          if (xhr.readyState !== 4) {
+            return;
+          }
+
+          t.pass('We used onreadystatechange=');
           t.ok(
             /faux\-jax/.test(xhr.responseText),
             'We got the current location content with ajax'
           );
         };
       }
+      xhr.send();
     });
 
     test('fauxJax intercepts XMLHttpRequests', function(t) {

@@ -53,11 +53,7 @@ test('xhr.setResponseHeaders() sets readyState to HEADERS_RECEIVED (2)', functio
 });
 
 test('xhr.setResponseHeaders() fires a readystatechange event', function(t) {
-  t.plan(1);
-
-  var sinon = require('sinon');
-  var clock = sinon.useFakeTimers();
-  clock.tick(500);
+  t.plan(7);
 
   var xhr = new XMLHttpRequest();
   xhr.open('GET', '/');
@@ -73,12 +69,17 @@ test('xhr.setResponseHeaders() fires a readystatechange event', function(t) {
     type: 'readystatechange'
   };
 
-  xhr.onreadystatechange = function(e) {
-    t.deepEqual(e, expectedEvent, 'event matches');
+  xhr.onreadystatechange = function(receivedEvent) {
+    receivedEvent.timestamp = expectedEvent.timestamp;
+    t.equal(receivedEvent.bubbles, expectedEvent.bubbles);
+    t.equal(receivedEvent.cancelable, expectedEvent.cancelable);
+    t.equal(receivedEvent.currentTarget, expectedEvent.currentTarget);
+    t.equal(receivedEvent.eventPhase, expectedEvent.eventPhase);
+    t.equal(receivedEvent.target, expectedEvent.target);
+    t.equal(receivedEvent.timestamp, expectedEvent.timestamp);
+    t.equal(receivedEvent.type, expectedEvent.type);
   };
 
   xhr.setResponseHeaders({});
-
-  clock.restore();
   t.end();
 });

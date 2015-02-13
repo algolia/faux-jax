@@ -35,11 +35,7 @@ test('xhr.setResponseBody() throws when state is not HEADERS_RECEIVED', function
 });
 
 test('xhr.setResponseBody() sends readystatechange event with a LOADING readyState every 10 bytes', function(t) {
-  t.plan(6);
-
-  var sinon = require('sinon');
-  var clock = sinon.useFakeTimers();
-  clock.tick(500);
+  t.plan(18);
 
   var body = (new Array(21)).join();
   var xhr = new XMLHttpRequest();
@@ -67,9 +63,17 @@ test('xhr.setResponseBody() sends readystatechange event with a LOADING readySta
     type: 'readystatechange'
   }];
 
-  xhr.onreadystatechange = function listen(e) {
-    t.deepEqual(e, expectedEvents[receivedEvents], 'event matches');
-    t.equal(e.target.readyState, 3, 'readyState is LOADING');
+  xhr.onreadystatechange = function listen(receivedEvent) {
+    var expectedEvent = expectedEvents[receivedEvents];
+    receivedEvent.timestamp = expectedEvent.timestamp;
+    t.equal(receivedEvent.bubbles, expectedEvent.bubbles);
+    t.equal(receivedEvent.cancelable, expectedEvent.cancelable);
+    t.equal(receivedEvent.currentTarget, expectedEvent.currentTarget);
+    t.equal(receivedEvent.eventPhase, expectedEvent.eventPhase);
+    t.equal(receivedEvent.target, expectedEvent.target);
+    t.equal(receivedEvent.timestamp, expectedEvent.timestamp);
+    t.equal(receivedEvent.type, expectedEvent.type);
+    t.equal(receivedEvent.target.readyState, 3, 'readyState is LOADING');
     receivedEvents++;
     t.equal(xhr.responseText.length, receivedEvents * 10, 'content length updated');
     if (receivedEvents === 2) {
@@ -78,7 +82,6 @@ test('xhr.setResponseBody() sends readystatechange event with a LOADING readySta
   };
 
   xhr.setResponseBody(body);
-  clock.restore();
 });
 
 test('xhr.setResponseBody() sends readystatechange event with a DONE readyState when finished', function(t) {
@@ -89,8 +92,8 @@ test('xhr.setResponseBody() sends readystatechange event with a DONE readyState 
 
   var receivedEvents = [];
 
-  xhr.onreadystatechange = function listen(e) {
-    receivedEvents.push(e);
+  xhr.onreadystatechange = function listen(receivedEvent) {
+    receivedEvents.push(receivedEvent);
   };
 
   xhr.setResponseBody('DAWG');
@@ -111,28 +114,30 @@ test('xhr.setResponseBody() sets responseText', function(t) {
   t.end();
 });
 
-test('xhr.setResponseBody() sets responseURL when relative', function(t) {
-  var urlResolve = require('url').resolve;
-  var xhr = new XMLHttpRequest();
-  xhr.open('GET', 'ah/ahahahah#ROFL');
-  xhr.send();
-  xhr.setResponseHeaders({});
-  xhr.setResponseBody('DAWG');
+if (support.responseURL) {
+  test('xhr.setResponseBody() sets responseURL when relative', function(t) {
+    var urlResolve = require('url').resolve;
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', 'ah/ahahahah#ROFL');
+    xhr.send();
+    xhr.setResponseHeaders({});
+    xhr.setResponseBody('DAWG');
 
-  t.equal(xhr.responseURL, urlResolve(location.href, 'ah/ahahahah'), 'responseURL matches');
-  t.end();
-});
+    t.equal(xhr.responseURL, urlResolve(location.href, 'ah/ahahahah'), 'responseURL matches');
+    t.end();
+  });
 
-test('xhr.setResponseBody() sets responseURL when absolute', function(t) {
-  var xhr = new XMLHttpRequest();
-  xhr.open('GET', 'http://www.google.com/dawg#WIIIIII');
-  xhr.send();
-  xhr.setResponseHeaders({});
-  xhr.setResponseBody('DAWG');
+  test('xhr.setResponseBody() sets responseURL when absolute', function(t) {
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', 'http://www.google.com/dawg#WIIIIII');
+    xhr.send();
+    xhr.setResponseHeaders({});
+    xhr.setResponseBody('DAWG');
 
-  t.equal(xhr.responseURL, 'http://www.google.com/dawg', 'responseURL matches');
-  t.end();
-});
+    t.equal(xhr.responseURL, 'http://www.google.com/dawg', 'responseURL matches');
+    t.end();
+  });
+}
 
 if (support.response) {
   test('xhr.setResponseBody() sets response', function(t) {
