@@ -1,3 +1,10 @@
+# 1.1.0 (2015-02-13)
+
+  * add IE7/8 compatiblity
+  * add more feature detection (events, like onload not on IE7)
+  * remove IE6 testing, there will be no compatibility
+  * do not use deepEqual from tape on IE7/8, fails
+
 # 1.0.2 (2015-02-12)
 
   * fix .install() when using XDomainRequest
