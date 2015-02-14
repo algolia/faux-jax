@@ -103,6 +103,29 @@ test('xhr.setResponseBody() sends readystatechange event with a DONE readyState 
   t.end();
 });
 
+test('xhr.setResponseBody() sends a load event when finished', function(t) {
+  t.plan(1);
+
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', '/');
+  xhr.send();
+  xhr.setResponseHeaders({});
+
+  xhr.onload = function listen() {
+    if (support.events.load) {
+      t.pass('received a load event');
+    } else {
+      t.fail('should not receive a load event');
+    }
+  };
+
+  xhr.setResponseBody('DAWG');
+
+  if (!support.events.load) {
+    t.pass('load event not supported');
+  }
+});
+
 test('xhr.setResponseBody() sets responseText', function(t) {
   var xhr = new XMLHttpRequest();
   xhr.open('GET', '/');
