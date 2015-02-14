@@ -1,3 +1,8 @@
+# 1.2.0 (2015-02-14)
+  
+  * better progress events
+  * more feature detection, closer to native environment
+
 # 1.1.0 (2015-02-13)
 
   * add IE7/8 compatiblity
