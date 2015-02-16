@@ -1,3 +1,9 @@
+# 1.3.0 (2015-02-16)
+  
+  * do not duplicate content-type header if case does not matches
+  * setRequestHeader() compare header names in a case insensitive
+  * setRequestHeader() appends header values
+
 # 1.2.0 (2015-02-14)
   
   * better progress events
