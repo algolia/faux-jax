@@ -40,3 +40,16 @@ test('xhr.setRequestHeader() adds headers', function(t) {
   });
   t.end();
 });
+
+test('xhr.setRequestHeader() append values on successive calls', function(t) {
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', '/');
+  xhr.setRequestHeader('namE', 'val1');
+  xhr.setRequestHeader('name', 'val2');
+  xhr.setRequestHeader('NaMe', 'val3');
+
+  t.deepEqual(xhr.requestHeaders, {
+    namE: 'val1, val2, val3'
+  });
+  t.end();
+});

@@ -97,3 +97,18 @@ if (support.events.loadstart) {
     xhr.send('Hello!');
   });
 }
+
+test('xhr.send() sets Content-Type in a case insensitive manner', function(t) {
+  var xhr = new XMLHttpRequest();
+  xhr.open('POST', '/');
+  xhr.setRequestHeader('Content-type', 'application/json;charset=UTF-8');
+  // .send() will try to set a `Content-Type` if none, we test that there's
+  // no duplicate `content-type`
+  xhr.send();
+  t.deepEqual(
+    xhr.requestHeaders, {
+      'Content-type': 'application/json;charset=UTF-8'
+    }
+  );
+  t.end();
+});
