@@ -16,26 +16,40 @@ npm install faux-jax --save[-dev]
 
 # Example
 
+
 ```js
 var fauxJax = require('faux-jax');
 
 fauxJax.install();
-var xhr = new XMLHttpRequest();
 
-xhr.open('POST', '/dawg');
-xhr.setRequestHeader('Content-Type', 'application/json');
-xhr.send(
-  JSON.stringify({
-    YAW: 'dawg'
-  })
-);
+doAJAX();
+respondToAJAX();
 
-xhr.respond(
-  200, {
-    'Content-Type': 'application/json'
-  },
-  '{"zup": "bro?"}'
-);
+// somewhere in your code:
+function doAJAX() {
+  var xhr = new XMLHttpRequest();
+
+  xhr.open('POST', '/dawg');
+  xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.send(
+    JSON.stringify({
+      YAW: 'dawg'
+    })
+  );
+}
+
+// in a test file probably:
+function respondToAJAX() {
+  var request = fauxJax.requests[0];
+
+  request.respond(
+    // status
+    200, { // headers
+      'Content-Type': 'application/json'
+    },
+    '{"zup": "bro?"}' //body
+  );
+}
 
 console.log(fauxJax.requests[0].response);
 // '{"zup": "bro?"}'
