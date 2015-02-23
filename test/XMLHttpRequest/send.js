@@ -19,22 +19,21 @@ test('xhr.send() throws when send() flag is set', function(t) {
   t.end();
 });
 
-test('xhr.send() forces UTF-8 charset when body is not null', function(t) {
-  var xhr = new XMLHttpRequest();
-  xhr.open('POST', '/yaw');
-  xhr.setRequestHeader('Content-Type', 'text/yaw; charset=utf-9');
-  xhr.send('Hello!');
-
-  t.equal(xhr.requestHeaders['Content-Type'], 'text/yaw;charset=UTF-8', 'Charset is UTF-8');
-  t.end();
-});
-
 test('xhr.send() sets default `Content-Type` when none set', function(t) {
   var xhr = new XMLHttpRequest();
   xhr.open('POST', '/yaw');
   xhr.send('Hello!');
 
   t.equal(xhr.requestHeaders['Content-Type'], 'text-plain;charset=UTF-8', 'Default Content-Type set');
+  t.end();
+});
+
+test('xhr.send() does not sets a default `Content-Type` when no body', function(t) {
+  var xhr = new XMLHttpRequest();
+  xhr.open('POST', '/yaw');
+  xhr.send();
+
+  t.equal(xhr.requestHeaders['Content-Type'], undefined, 'No default Content-Type set');
   t.end();
 });
 
