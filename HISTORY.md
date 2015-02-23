@@ -1,3 +1,8 @@
+# 1.4.0 (2015-02-23)
+
+  * do not force a Content-Type if body is null
+  * do not force a charset if none set
+
 # 1.3.0 (2015-02-16)
   
   * do not duplicate content-type header if case does not matches
