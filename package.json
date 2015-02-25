@@ -25,12 +25,12 @@
     "bulk-require": "0.2.1",
     "bulkify": "1.1.1",
     "domready": "0.3.0",
-    "eslint": "0.14.1",
+    "eslint": "0.15.0",
     "sinon": "1.12.2",
     "tape": "3.5.0",
-    "zuul": "1.18.1"
+    "zuul": "2.0.0"
   },
   "dependencies": {
-    "lodash-compat": "3.2.0"
+    "lodash-compat": "3.3.1"
   }
 }
