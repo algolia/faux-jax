@@ -7,9 +7,6 @@ var support = require('./lib/support');
 
 var fauxJax = module.exports = {};
 
-global.nativeXMLHttpRequest = native.XMLHttpRequest;
-global.nativeXDomainRequest = native.nativeXDomainRequest;
-
 fauxJax.install = function() {
   // only modify the writable state of XMLHttpRequest in old ies when installing
   // it will be done only once
