@@ -11,6 +11,10 @@ global.nativeXMLHttpRequest = native.XMLHttpRequest;
 global.nativeXDomainRequest = native.nativeXDomainRequest;
 
 fauxJax.install = function() {
+  // only modify the writable state of XMLHttpRequest in old ies when installing
+  // it will be done only once
+  require('./lib/make-native-implementations-writable.js')();
+
   if (support.hasXMLHttpRequest) {
     global.XMLHttpRequest = FakeXHR;
   }
@@ -49,5 +53,3 @@ function FakeXDR() {
 }
 
 inherits(FakeXDR, XDomainRequestMock);
-
-require('./lib/ie.js');
