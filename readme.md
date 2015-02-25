@@ -117,7 +117,9 @@ Also if the browser only implement [some parts](https://dvcs.w3.org/hg/xhr/raw-f
 npm run dev
 ```
 
-[Tests](./test/) are written with [tape](https://github.com/substack/tape) and run through [zuul](http://localhost:8080/__zuul).
+Go to http://localhost:8080/__zuul.
+
+[Tests](./test/) are written with [tape](https://github.com/substack/tape) and run through [zuul](https://github.com/defunctzombie/zuul).
 
 # Lint
 
