@@ -34,6 +34,8 @@ fauxJax.restore = function() {
 
 fauxJax.requests = [];
 
+fauxJax.support = support;
+
 function FakeXHR() {
   XMLHttpRequestMock.call(this);
   fauxJax.requests.push(this);

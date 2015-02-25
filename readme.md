@@ -97,6 +97,10 @@ Always `{}` with `XDomainRequest`.
 
 Sets back global `XMLHttpRequest` and `XDomainRequest` to native implementations.
 
+## fauxJax.support
+
+Object containing [various support flags](./lib/support.js) for your tests, used internally by `faux-jax`.
+
 # How
 
 tl;dr; We try to be as close as possible to the mocked native environement.
