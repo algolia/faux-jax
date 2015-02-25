@@ -1,3 +1,7 @@
+# 1.5.0 (2015-02-25)
+
+  * expose support flags through `fauxJax.support`
+
 # 1.4.0 (2015-02-23)
 
   * do not force a Content-Type if body is null
