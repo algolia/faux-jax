@@ -1,3 +1,7 @@
+# 1.5.1 (2015-02-25)
+
+  * no more modifying the environment before any call to `fauxJax.install()`
+
 # 1.5.0 (2015-02-25)
 
   * expose support flags through `fauxJax.support`
