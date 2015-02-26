@@ -1,3 +1,8 @@
+# 1.6.0 (2015-02-26)
+  
+  * enhance XDomainRequest implem
+  * use writable-window-method
+
 # 1.5.1 (2015-02-25)
 
   * no more modifying the environment before any call to `fauxJax.install()`
