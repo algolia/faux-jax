@@ -28,10 +28,10 @@
     "eslint": "0.15.0",
     "sinon": "1.12.2",
     "tape": "3.5.0",
-    "writable-window-method": "1.0.0",
     "zuul": "2.0.0"
   },
   "dependencies": {
-    "lodash-compat": "3.3.1"
+    "lodash-compat": "3.3.1",
+    "writable-window-method": "1.0.1"
   }
 }
