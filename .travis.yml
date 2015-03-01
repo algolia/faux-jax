@@ -1,12 +1,9 @@
 language: node_js
 node_js:
   - "0.10"
-addons:
-  sauce_connect: true
 install: npm install
 script: npm run test-ci
 env:
   global:
-    - DEBUG=zuul:*
     - secure: H3JzQbEV/ZddRvB9FSkvOxgFjr3afuf+MV7i0+5cGf7Jrot8Wp7Yn+GHvebWoPOXTgUJ+cSoFxd11Him2255Bt3xbRYgI6jOqsK0AkVzY8l37Vin1Oi7J5nWkp0TWoTssitzfpc8oTqPFlBupptxDBsLWYm3cVV7pDJxMvKL6yU=
     - secure: HnR9+UHRpEAxwmFyh80nPwpr+HoUeVe+3dZbAvkz45s8T93a8msTYQpi0KnvtTwjBi8a9YGbJPD0wsfb+V9pQTx9RegeSambf+TfpW6bINSdeF6+WRGvz15ymlHSTPGpanoLzSPdWlNAhwFdWyBhcMpqdirNebSMqOTOGHHDxcg=
