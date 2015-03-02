@@ -5,6 +5,5 @@ install: npm install
 script: npm run test-ci
 env:
   global:
-    - "DEBUG=zuul*"
     - SAUCE_USERNAME=os-algolia-faux-jax
     - secure: aZBDv+w2jr7fFbRoApDXeG0yzrc9R4kuhgN1idr77eZ43fRbIqP5ecuMoT2EbamhX+NZuxmONMqn2rUK5y4OlqFgk24Nhzx5V8mKdEbSFl2lyUPbddtHBRXnfEMjhKgynoWspHl/CT9syZA2He52kddo8v8fPPrjE8TYNlTiQNs=
