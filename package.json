@@ -28,7 +28,7 @@
     "eslint": "0.15.1",
     "sinon": "1.12.2",
     "tape": "3.5.0",
-    "zuul": "git://github.com/vvo/zuul#v2.0.4-beta"
+    "zuul": "git://github.com/vvo/zuul#v2.0.6-beta"
   },
   "dependencies": {
     "lodash-compat": "3.3.1",
