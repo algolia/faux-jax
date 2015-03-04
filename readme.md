@@ -145,7 +145,7 @@ Many thanks!
 [license-url]: LICENSE
 [downloads-image]: https://img.shields.io/npm/dm/faux-jax.svg?style=flat-square
 [downloads-url]: http://npm-stat.com/charts.html?package=faux-jax
-[browser-test-matrix]: https://saucelabs.com/browser-matrix/algolia-faux-jax.svg
-[browser-test-url]: https://saucelabs.com/u/algolia-faux-jax
+[browser-test-matrix]: https://saucelabs.com/browser-matrix/os-algolia-faux-jax.svg
+[browser-test-url]: https://saucelabs.com/u/os-algolia-faux-jax
 
 
