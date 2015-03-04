@@ -14,8 +14,8 @@ test('when timeout has passed, we get a timeout event', function(t) {
   var sinon = require('sinon');
   var clock = sinon.useFakeTimers();
   var xdr = new XDomainRequest();
-  xdr.timeout = 500;
   xdr.open('GET', '/');
+  xdr.timeout = 500;
   xdr.send();
 
   var expectedEvent = {
@@ -29,6 +29,7 @@ test('when timeout has passed, we get a timeout event', function(t) {
   };
 
   xdr.ontimeout = function(receivedEvent) {
+    clock.restore();
     receivedEvent.timestamp = expectedEvent.timestamp;
     t.equal(receivedEvent.bubbles, expectedEvent.bubbles);
     t.equal(receivedEvent.cancelable, expectedEvent.cancelable);
@@ -37,8 +38,37 @@ test('when timeout has passed, we get a timeout event', function(t) {
     t.equal(receivedEvent.target, expectedEvent.target);
     t.equal(receivedEvent.timestamp, expectedEvent.timestamp);
     t.equal(receivedEvent.type, expectedEvent.type);
-    clock.restore();
   };
 
   clock.tick(800);
+});
+
+test('when timeout has passed, we cannot respond anymore', function(t) {
+  t.plan(2);
+
+  var sinon = require('sinon');
+  var clock = sinon.useFakeTimers();
+  var xdr = new XDomainRequest();
+  xdr.open('GET', '/');
+  xdr.timeout = 500;
+  xdr.send();
+
+  xdr.ontimeout = function() {
+    clock.restore();
+    t.pass('We received a timeout event');
+  };
+
+  xdr.onload = function() {
+    t.fail('We should not get an onload event');
+  };
+
+  clock.tick(800);
+
+  xdr.respond(200, {}, 'OK!');
+
+  t.equal(
+    xdr.responseText,
+    '',
+    'xdr.responseText was not updated'
+  );
 });

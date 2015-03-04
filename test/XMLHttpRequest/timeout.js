@@ -16,15 +16,45 @@ if (support.timeout) {
     var sinon = require('sinon');
     var clock = sinon.useFakeTimers();
     var xhr = new XMLHttpRequest();
-    xhr.timeout = 500;
     xhr.open('GET', '/');
+    xhr.timeout = 500;
     xhr.send();
 
     xhr.ontimeout = function() {
-      t.pass('We received a timeout event');
       clock.restore();
+      t.pass('We received a timeout event');
     };
 
     clock.tick(800);
+  });
+
+  test('when xhr.timeout has passed, responding will not do anything', function(t) {
+    t.plan(2);
+
+    var sinon = require('sinon');
+    var clock = sinon.useFakeTimers();
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', '/');
+    xhr.timeout = 500;
+    xhr.send();
+
+    xhr.ontimeout = function() {
+      clock.restore();
+      t.pass('We received a timeout event');
+    };
+
+    xhr.onload = function() {
+      t.fail('We should not get an onload event');
+    };
+
+    clock.tick(800);
+
+    xhr.respond(200, {}, 'OK!');
+
+    t.equal(
+      xhr.responseText,
+      '',
+      'xhr.responseText was not updated'
+    );
   });
 }
