@@ -1,3 +1,7 @@
+# 1.7.1 (2015-03-04)
+
+  * throw when calling `fauxJax.install()` twice
+  
 # 1.7.0 (2015-03-04)
 
   * do not allow `.respond()` `.setResponseHeaders()` `.setResponseBody` when request timeout or error
