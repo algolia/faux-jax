@@ -1,3 +1,7 @@
+# 1.7.0 (2015-03-04)
+
+  * do not allow `.respond()` `.setResponseHeaders()` `.setResponseBody` when request timeout or error
+
 # 1.6.0 (2015-02-26)
   
   * enhance XDomainRequest implem
