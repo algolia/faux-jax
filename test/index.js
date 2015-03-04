@@ -18,8 +18,6 @@ require('writable-window-method')([
   'Date'
 ]);
 
-var fauxJax = require('../');
-
 domready(run);
 
 function run() {
@@ -38,6 +36,7 @@ function run() {
 
   if (support.hasXMLHttpRequest) {
     test('nothing gets intercepted by default', function(t) {
+
       t.plan(2);
       var xhr = new XMLHttpRequest();
       xhr.open('GET', location.pathname);
@@ -66,6 +65,8 @@ function run() {
     });
 
     test('fauxJax intercepts XMLHttpRequests', function(t) {
+      var fauxJax = require('../');
+
       fauxJax.install();
       var xhr = new XMLHttpRequest();
       xhr.open('GET', '/fo1pf1');
@@ -81,6 +82,8 @@ function run() {
 
   if (support.hasXDomainRequest) {
     test('fauxJax intercepts XDomainRequests', function(t) {
+      var fauxJax = require('../');
+
       fauxJax.install();
       var xdr = new XDomainRequest();
       xdr.open('GET', '/fo1pf1');
@@ -93,4 +96,20 @@ function run() {
       t.end();
     });
   }
+
+  test('Calling `fauxJax.install()` twice throws', function(t) {
+    var bind = require('lodash-compat/function/bind');
+    var fauxJax = require('../');
+
+    fauxJax.install();
+
+    t.throws(
+      bind(fauxJax.install, fauxJax),
+      Error,
+      'Double `fauxJax.install()` call throws'
+    );
+
+    fauxJax.restore();
+    t.end();
+  });
 }

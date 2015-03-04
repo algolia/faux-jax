@@ -7,7 +7,15 @@ var support = require('./lib/support');
 
 var fauxJax = module.exports = {};
 
+var installed;
+
 fauxJax.install = function() {
+  if (installed) {
+    throw new Error('Cannot call `fauxJax.install()` twice. Did you forgot to call `fauxJax.restore()`?');
+  }
+
+  installed = true;
+
   // only modify the writable state of XMLHttpRequest in old ies when installing
   // it will be done only once
   require('./lib/make-native-implementations-writable.js')();
@@ -22,6 +30,8 @@ fauxJax.install = function() {
 };
 
 fauxJax.restore = function() {
+  installed = false;
+
   if (support.hasXMLHttpRequest) {
     global.XMLHttpRequest = native.XMLHttpRequest;
   }
