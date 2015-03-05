@@ -29,7 +29,7 @@
     "sinon": "1.12.2",
     "tape": "3.5.0",
     "zuul": "2.1.0",
-    "zuul-ngrok": "2.0.1"
+    "zuul-ngrok": "git://github.com/vvo/zuul-ngrok#decbe165e0a50b7afaef3eb1dd1f49ed711bc8d7"
   },
   "dependencies": {
     "lodash-compat": "3.3.1",
