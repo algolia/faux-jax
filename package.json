@@ -28,7 +28,8 @@
     "eslint": "0.15.1",
     "sinon": "1.12.2",
     "tape": "3.5.0",
-    "zuul": "2.1.0"
+    "zuul": "2.1.0",
+    "zuul-ngrok": "2.0.1"
   },
   "dependencies": {
     "lodash-compat": "3.3.1",
