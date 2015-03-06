@@ -26,15 +26,15 @@ function run() {
 
   var bulkRequire = require('bulk-require');
 
-  if (support.hasXDomainRequest) {
+  if (support.xdr) {
     bulkRequire(__dirname, ['./XDomainRequest/*.js']);
   }
 
-  if (support.hasXMLHttpRequest) {
+  if (support.xhr) {
     bulkRequire(__dirname, ['./XMLHttpRequest/*.js']);
   }
 
-  if (support.hasXMLHttpRequest) {
+  if (support.xhr) {
     test('nothing gets intercepted by default', function(t) {
 
       t.plan(2);
@@ -80,7 +80,7 @@ function run() {
     });
   }
 
-  if (support.hasXDomainRequest) {
+  if (support.xdr) {
     test('fauxJax intercepts XDomainRequests', function(t) {
       var fauxJax = require('../');
 

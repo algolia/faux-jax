@@ -1,6 +1,7 @@
 var bind = require('lodash-compat/function/bind');
 var test = require('tape');
 
+var support = require('../../lib/support');
 var XDomainRequest = require('../../lib/XDomainRequest/');
 
 test('xdr.setResponseBody() throws when no body', function(t) {
@@ -51,13 +52,11 @@ test('xdr.setResponseBody() calls xdr.onprogress() for every 10 bytes', function
 
   var receivedEvents = 0;
 
-  xdr.onprogress = function() {
+  xdr.onprogress = function(e) {
+    t.notOk(e, 'no event object received');
     t.pass('received a progress event');
     receivedEvents++;
     t.equal(xdr.responseText.length, receivedEvents * 10, 'content length updated');
-
-    // believe it or not, you do not receive an event object
-    t.equal(0, arguments.length, 'no Event object received');
 
     if (receivedEvents === 2) {
       xdr.onprogress = function() {};
@@ -68,33 +67,38 @@ test('xdr.setResponseBody() calls xdr.onprogress() for every 10 bytes', function
 });
 
 test('xdr.setResponseBody() calls xdr.onload() when finished', function(t) {
-  t.plan(7);
-
+  var includes = require('lodash-compat/collection/includes');
   var xdr = new XDomainRequest();
   xdr.open('GET', '/');
   xdr.send();
   xdr.setResponseHeaders({});
 
-  var expectedEvent = {
-    bubbles: false,
-    cancelable: false,
-    currentTarget: null,
-    eventPhase: 2,
-    target: null,
-    timestamp: 500,
-    type: 'load'
-  };
-
   xdr.onload = function listen(receivedEvent) {
+    if (includes(support.xdr.eventObjects, 'load')) {
+      var expectedEvent = {
+        bubbles: false,
+        cancelable: false,
+        currentTarget: null,
+        eventPhase: 2,
+        target: null,
+        timestamp: 500,
+        type: 'load'
+      };
 
-    receivedEvent.timestamp = expectedEvent.timestamp;
-    t.equal(receivedEvent.bubbles, expectedEvent.bubbles);
-    t.equal(receivedEvent.cancelable, expectedEvent.cancelable);
-    t.equal(receivedEvent.currentTarget, expectedEvent.currentTarget);
-    t.equal(receivedEvent.eventPhase, expectedEvent.eventPhase);
-    t.equal(receivedEvent.target, expectedEvent.target);
-    t.equal(receivedEvent.timestamp, expectedEvent.timestamp);
-    t.equal(receivedEvent.type, expectedEvent.type);
+      receivedEvent.timestamp = expectedEvent.timestamp;
+      t.ok(receivedEvent, 'received a load event');
+      t.equal(receivedEvent.bubbles, expectedEvent.bubbles);
+      t.equal(receivedEvent.cancelable, expectedEvent.cancelable);
+      t.equal(receivedEvent.currentTarget, expectedEvent.currentTarget);
+      t.equal(receivedEvent.eventPhase, expectedEvent.eventPhase);
+      t.equal(receivedEvent.target, expectedEvent.target);
+      t.equal(receivedEvent.timestamp, expectedEvent.timestamp);
+      t.equal(receivedEvent.type, expectedEvent.type);
+    } else {
+      t.notOk(receivedEvent, 'no load event object received');
+    }
+
+    t.end();
   };
 
   xdr.setResponseBody('DAWG');

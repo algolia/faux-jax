@@ -1,5 +1,6 @@
 var test = require('tape');
 
+var support = require('../../lib/support');
 var XDomainRequest = require('../../lib/XDomainRequest/');
 
 test('timeout is initialized at -1', function(t) {
@@ -9,8 +10,7 @@ test('timeout is initialized at -1', function(t) {
 });
 
 test('when timeout has passed, we get a timeout event', function(t) {
-  t.plan(7);
-
+  var includes = require('lodash-compat/collection/includes');
   var sinon = require('sinon');
   var clock = sinon.useFakeTimers();
   var xdr = new XDomainRequest();
@@ -18,26 +18,34 @@ test('when timeout has passed, we get a timeout event', function(t) {
   xdr.timeout = 500;
   xdr.send();
 
-  var expectedEvent = {
-    bubbles: false,
-    cancelable: false,
-    currentTarget: null,
-    eventPhase: 2,
-    target: null,
-    timestamp: 500,
-    type: 'timeout'
-  };
-
   xdr.ontimeout = function(receivedEvent) {
     clock.restore();
-    receivedEvent.timestamp = expectedEvent.timestamp;
-    t.equal(receivedEvent.bubbles, expectedEvent.bubbles);
-    t.equal(receivedEvent.cancelable, expectedEvent.cancelable);
-    t.equal(receivedEvent.currentTarget, expectedEvent.currentTarget);
-    t.equal(receivedEvent.eventPhase, expectedEvent.eventPhase);
-    t.equal(receivedEvent.target, expectedEvent.target);
-    t.equal(receivedEvent.timestamp, expectedEvent.timestamp);
-    t.equal(receivedEvent.type, expectedEvent.type);
+
+    if (includes(support.xdr.eventObjects, 'timeout')) {
+      var expectedEvent = {
+        bubbles: false,
+        cancelable: false,
+        currentTarget: null,
+        eventPhase: 2,
+        target: null,
+        timestamp: 500,
+        type: 'timeout'
+      };
+
+      receivedEvent.timestamp = expectedEvent.timestamp;
+      t.ok(receivedEvent, 'received a timeout event');
+      t.equal(receivedEvent.bubbles, expectedEvent.bubbles);
+      t.equal(receivedEvent.cancelable, expectedEvent.cancelable);
+      t.equal(receivedEvent.currentTarget, expectedEvent.currentTarget);
+      t.equal(receivedEvent.eventPhase, expectedEvent.eventPhase);
+      t.equal(receivedEvent.target, expectedEvent.target);
+      t.equal(receivedEvent.timestamp, expectedEvent.timestamp);
+      t.equal(receivedEvent.type, expectedEvent.type);
+    } else {
+      t.notOk(receivedEvent, 'no timeout event object received');
+    }
+
+    t.end();
   };
 
   clock.tick(800);

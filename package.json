@@ -32,6 +32,7 @@
     "zuul-ngrok": "git://github.com/vvo/zuul-ngrok#decbe165e0a50b7afaef3eb1dd1f49ed711bc8d7"
   },
   "dependencies": {
+    "bowser": "0.7.2",
     "lodash-compat": "3.3.1",
     "writable-window-method": "1.0.1"
   }

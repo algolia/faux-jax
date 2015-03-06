@@ -18,13 +18,13 @@ fauxJax.install = function() {
 
   // only modify the writable state of XMLHttpRequest in old ies when installing
   // it will be done only once
-  require('./lib/make-native-implementations-writable.js')();
+  require('./lib/make-native-implementations-writable')();
 
-  if (support.hasXMLHttpRequest) {
+  if (support.xhr) {
     global.XMLHttpRequest = FakeXHR;
   }
 
-  if (support.hasXDomainRequest) {
+  if (support.xdr) {
     global.XDomainRequest = FakeXDR;
   }
 };
@@ -32,11 +32,11 @@ fauxJax.install = function() {
 fauxJax.restore = function() {
   installed = false;
 
-  if (support.hasXMLHttpRequest) {
+  if (support.xhr) {
     global.XMLHttpRequest = native.XMLHttpRequest;
   }
 
-  if (support.hasXDomainRequest) {
+  if (support.xdr) {
     global.XDomainRequest = native.XDomainRequest;
   }
 
