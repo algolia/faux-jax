@@ -1,6 +1,4 @@
 ui: tape
-tunnel:
-  type: ngrok
 browsers:
   - name: chrome
     version: 39..dev
