@@ -1,3 +1,8 @@
+# 2.0.0 (2015-03-06)
+
+  * tune XDomainRequest mock. No eventObject for IE8 in event listeners
+  * no eventObject in progress events on all browsers when XDomainRequest
+
 # 1.7.1 (2015-03-04)
 
   * throw when calling `fauxJax.install()` twice
