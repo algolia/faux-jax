@@ -112,7 +112,7 @@ test('xhr.setResponseBody() sends a load event when finished', function(t) {
   xhr.setResponseHeaders({});
 
   xhr.onload = function listen() {
-    if (support.events.load) {
+    if (support.xhr.events.load) {
       t.pass('received a load event');
     } else {
       t.fail('should not receive a load event');
@@ -121,7 +121,7 @@ test('xhr.setResponseBody() sends a load event when finished', function(t) {
 
   xhr.setResponseBody('DAWG');
 
-  if (!support.events.load) {
+  if (!support.xhr.events.load) {
     t.pass('load event not supported');
   }
 });
@@ -137,7 +137,7 @@ test('xhr.setResponseBody() sets responseText', function(t) {
   t.end();
 });
 
-if (support.responseURL) {
+if (support.xhr.responseURL) {
   test('xhr.setResponseBody() sets responseURL when relative', function(t) {
     var urlResolve = require('url').resolve;
     var xhr = new XMLHttpRequest();
@@ -162,7 +162,7 @@ if (support.responseURL) {
   });
 }
 
-if (support.response) {
+if (support.xhr.response) {
   test('xhr.setResponseBody() sets response', function(t) {
     var xhr = new XMLHttpRequest();
     xhr.open('GET', '/');
@@ -175,7 +175,7 @@ if (support.response) {
   });
 }
 
-if (support.response) {
+if (support.xhr.response) {
   test('xhr.setResponseBody() understand responseType=json', function(t) {
     var xhr = new XMLHttpRequest();
     xhr.open('GET', '/');

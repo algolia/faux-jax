@@ -40,7 +40,7 @@ function run() {
       t.plan(2);
       var xhr = new XMLHttpRequest();
       xhr.open('GET', location.pathname);
-      if (support.addEventListener) {
+      if (support.xhr.addEventListener) {
         xhr.addEventListener('load', function() {
           t.pass('We used addEventListener');
           t.ok(

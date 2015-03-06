@@ -10,48 +10,48 @@ var support = require('../../lib/support');
 test('XMLHttpRequest interface', function(t) {
   var xhr = new XMLHttpRequest();
 
-  if (support.events.abort) {
+  if (support.xhr.events.abort) {
     t.equal(xhr.onabort, null, 'onabort is null');
   }
 
-  if (support.events.error) {
+  if (support.xhr.events.error) {
     t.equal(xhr.onerror, null, 'onerror is null');
   }
 
-  if (support.events.onload) {
+  if (support.xhr.events.onload) {
     t.equal(xhr.ononload, null, 'ononload is null');
   }
 
-  if (support.events.loadend) {
+  if (support.xhr.events.loadend) {
     t.equal(xhr.onloadend, null, 'onloadend is null');
   }
 
-  if (support.events.loadstart) {
+  if (support.xhr.events.loadstart) {
     t.equal(xhr.onloadstart, null, 'onloadstart is null');
   }
 
-  if (support.events.progress) {
+  if (support.xhr.events.progress) {
     t.equal(xhr.onprogress, null, 'onprogress is null');
   }
 
-  if (support.events.readystatechange) {
+  if (support.xhr.events.readystatechange) {
     t.equal(xhr.onreadystatechange, null, 'onreadystatechange is null');
   }
 
-  if (support.events.timeout) {
+  if (support.xhr.events.timeout) {
     t.equal(xhr.ontimeout, null, 'ontimeout is null');
   }
 
   t.equal(xhr.readyState, 0, 'readyState is 0');
 
-  if (support.response) {
+  if (support.xhr.response) {
     t.equal(xhr.response, '', 'response is an empty string');
   }
 
   t.equal(xhr.responseText, '', 'responseText is an empty string');
   t.equal(xhr.responseType, '', 'responseType is an empty string');
 
-  if (support.responseURL) {
+  if (support.xhr.responseURL) {
     t.equal(xhr.responseURL, '', 'responseURL is an empty string');
   }
 
@@ -59,7 +59,7 @@ test('XMLHttpRequest interface', function(t) {
   t.equal(xhr.status, 0, 'response status is 0');
   t.equal(xhr.statusText, '', 'response statusText is an empty string');
 
-  if (support.timeout) {
+  if (support.xhr.timeout) {
     t.equal(xhr.timeout, 0, 'default timeout is 0');
   }
 

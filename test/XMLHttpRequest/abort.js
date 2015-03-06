@@ -4,7 +4,7 @@ var test = require('tape');
 var XMLHttpRequest = require('../../lib/XMLHttpRequest/');
 var support = require('../../lib/support');
 
-if (support.response) {
+if (support.xhr.response) {
   test('xhr.abort() sets response to error when state > UNSENT and send() flag is true', function(t) {
     var xhr = new XMLHttpRequest();
     xhr.open('POST', '/');
@@ -139,18 +139,18 @@ test('xhr.abort() resets the xhr properties', function(t) {
   t.equal(xhr.responseXML, null, 'responseXML is null');
   t.equal(xhr.readyState, 0, 'readyState is 0');
 
-  if (support.response) {
+  if (support.xhr.response) {
     t.equal(xhr.response, '', 'response is an empty string');
   }
 
-  if (support.responseURL) {
+  if (support.xhr.responseURL) {
     t.equal(xhr.responseURL, '', 'responseURL is an empty string');
   }
 
   t.equal(xhr.status, 0, 'status back to 0');
   t.equal(xhr.statusText, '', 'statusText is an empty string');
 
-  if (support.timeout) {
+  if (support.xhr.timeout) {
     t.equal(xhr.timeout, 0, 'timeout back to 0');
   }
 

@@ -62,7 +62,7 @@ test('xhr.send() sets requestBody to null when GET or HEAD', function(t) {
 });
 
 
-if (support.events.loadstart) {
+if (support.xhr.events.loadstart) {
   test('xhr.send() fires a loadstart event', function(t) {
     t.plan(7);
 

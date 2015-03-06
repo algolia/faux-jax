@@ -3,7 +3,7 @@ var test = require('tape');
 var XMLHttpRequest = require('../../lib/XMLHttpRequest/');
 var support = require('../../lib/support');
 
-if (support.timeout) {
+if (support.xhr.timeout) {
   test('xhr.timeout is initialized at 0', function(t) {
     var xhr = new XMLHttpRequest();
     t.equal(xhr.timeout, 0, 'timeout initialized at 0');

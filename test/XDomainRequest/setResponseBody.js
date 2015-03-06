@@ -86,6 +86,7 @@ test('xdr.setResponseBody() calls xdr.onload() when finished', function(t) {
   };
 
   xdr.onload = function listen(receivedEvent) {
+
     receivedEvent.timestamp = expectedEvent.timestamp;
     t.equal(receivedEvent.bubbles, expectedEvent.bubbles);
     t.equal(receivedEvent.cancelable, expectedEvent.cancelable);
