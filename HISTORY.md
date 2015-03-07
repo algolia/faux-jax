@@ -1,3 +1,7 @@
+# UNRELEASED
+  
+  * fix `getAllResponseHeaders()` implementation, returns a string, not an array
+
 # 2.0.0 (2015-03-06)
 
   * tune XDomainRequest mock. No eventObject for IE8 in event listeners
