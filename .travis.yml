@@ -9,4 +9,4 @@ branches:
 env:
   global:
     - SAUCE_USERNAME=os-algolia-faux-jax
-    - secure: aZBDv+w2jr7fFbRoApDXeG0yzrc9R4kuhgN1idr77eZ43fRbIqP5ecuMoT2EbamhX+NZuxmONMqn2rUK5y4OlqFgk24Nhzx5V8mKdEbSFl2lyUPbddtHBRXnfEMjhKgynoWspHl/CT9syZA2He52kddo8v8fPPrjE8TYNlTiQNs=
+    - SAUCE_ACCESS_KEY=60276788-fd33-42b9-bfbe-9180e63c7c64
