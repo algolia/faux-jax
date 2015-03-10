@@ -1,3 +1,8 @@
+# 3.0.1 (2015-03-10)
+
+  * upgrade lodash to 3.5.0
+  * upgrade writable-window-method to 1.0.3
+
 # 3.0.0 (2015-03-07)
   
   * fix `getAllResponseHeaders()` implementation, returns a string, not an array

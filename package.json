@@ -1,6 +1,6 @@
 {
   "name": "faux-jax",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "Intercept Ajax requests and respond to them. Supports XMLHttpRequest and XDomainRequest. Close to the specs.",
   "main": "index.js",
   "scripts": {
