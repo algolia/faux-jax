@@ -25,15 +25,15 @@
     "bulk-require": "0.2.1",
     "bulkify": "1.1.1",
     "domready": "0.3.0",
-    "eslint": "0.15.1",
-    "sinon": "1.12.2",
+    "eslint": "0.16.1",
+    "sinon": "1.13.0",
     "tape": "3.5.0",
-    "zuul": "2.1.0",
+    "zuul": "2.1.1",
     "zuul-ngrok": "3.0.0"
   },
   "dependencies": {
     "bowser": "0.7.2",
-    "lodash-compat": "3.3.1",
-    "writable-window-method": "1.0.1"
+    "lodash-compat": "3.5.0",
+    "writable-window-method": "1.0.3"
   }
 }
