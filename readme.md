@@ -103,13 +103,13 @@ Object containing [various support flags](./lib/support.js) for your tests, used
 
 # How
 
-tl;dr; We try to be as close as possible to the mocked native environement.
+tl;dr; We try to be as close as possible to the mocked native environment.
 
 `faux-jax` uses [feature detection](./lib/support.js) to only expose what's relevant for the current environment.
 
 i.e. on Chrome, we do not intercept nor expose `XDomainRequest`.
 
-Also if the browser only implement [some parts](https://dvcs.w3.org/hg/xhr/raw-file/default/xhr-1/Overview.html) of `XMLHttpRequest`, we mimick it.
+Also if the browser only implement [some parts](https://dvcs.w3.org/hg/xhr/raw-file/default/xhr-1/Overview.html) of `XMLHttpRequest`, we mimic it.
 
 # Development
 
