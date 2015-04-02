@@ -72,7 +72,7 @@ function doRequest() {
     });
 
     res.on('end', function() {
-      console.log(Buffer.concat(chunks).toString(), 'Hello Node.js!');
+      console.log(Buffer.concat(chunks).toString());
     });
   }).end();
 }
