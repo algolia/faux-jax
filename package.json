@@ -1,7 +1,7 @@
 {
   "name": "faux-jax",
   "version": "3.0.1",
-  "description": "Intercept Ajax requests and respond to them. Supports XMLHttpRequest and XDomainRequest. Close to the specs.",
+  "description": "Intercept and respond to requests in the browser (XMLHttpRequest, XDomainRequest) and Node.js (http(s) module)",
   "main": "index.js",
   "scripts": {
     "dev": "DEBUG=zuul* zuul --local 8080 -- test/browser/index.js",
@@ -18,7 +18,9 @@
     "ajax",
     "fake",
     "mock",
-    "testing"
+    "testing",
+    "http",
+    "nodejs"
   ],
   "author": "Vincent Voyer <vincent.voyer@algolia.com>",
   "license": "MIT",
