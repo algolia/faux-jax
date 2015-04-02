@@ -1,7 +1,7 @@
 var bind = require('lodash-compat/function/bind');
 var test = require('tape');
 
-var XMLHttpRequest = require('../../lib/XMLHttpRequest/');
+var XMLHttpRequest = require('../../../lib/XMLHttpRequest/');
 
 test('xhr.setRequestHeader() throws when state is not OPENED', function(t) {
   var xhr = new XMLHttpRequest();

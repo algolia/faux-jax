@@ -1,8 +1,6 @@
 language: node_js
-node_js:
-  - "0.10"
 install: npm install
-script: npm run test-ci
+script: npm run $COMMAND
 branches:
   only:
     - master
@@ -10,3 +8,15 @@ env:
   global:
     - SAUCE_USERNAME=os-algolia-faux-jax
     - SAUCE_ACCESS_KEY=60276788-fd33-42b9-bfbe-9180e63c7c64
+matrix:
+  include:
+    - node_js: "0.10"
+      env: COMMAND=test-ci-browser
+    - node_js: "0.10"
+      env: COMMAND=test-node
+    - node_js: "0.12"
+      env: COMMAND=test-node
+    - node_js: "iojs"
+      env: COMMAND=test-node
+    - node_js: "0.10"
+      env: COMMAND=lint

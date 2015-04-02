@@ -4,10 +4,12 @@
   "description": "Intercept Ajax requests and respond to them. Supports XMLHttpRequest and XDomainRequest. Close to the specs.",
   "main": "index.js",
   "scripts": {
-    "test": "echo 'use either npm run dev or npm run test-ci'",
-    "test-ci": "DEBUG=zuul* zuul --tunnel ngrok test/index.js && npm run lint",
-    "lint": "eslint --quiet .",
-    "dev": "DEBUG=zuul* zuul --local 8080 test/index.js"
+    "dev": "DEBUG=zuul* zuul --local 8080 -- test/browser/index.js",
+    "test": "npm run test-phantom | tap-spec && npm run test-node | tap-spec && npm run lint",
+    "test-phantom": "zuul --phantom -- test/browser/index.js",
+    "test-node": "node test/node/index.js",
+    "test-ci-browser": "DEBUG=zuul* zuul --tunnel ngrok test/browser/index.js",
+    "lint": "eslint --quiet ."
   },
   "keywords": [
     "xhr",
@@ -26,14 +28,19 @@
     "bulkify": "1.1.1",
     "domready": "0.3.0",
     "eslint": "0.16.1",
+    "phantomjs": "1.9.16",
     "sinon": "1.13.0",
+    "tap-spec": "2.2.2",
     "tape": "3.5.0",
     "zuul": "2.1.1",
     "zuul-ngrok": "3.0.0"
   },
   "dependencies": {
     "bowser": "0.7.2",
+    "lodash": "3.6.0",
     "lodash-compat": "3.5.0",
+    "mitm": "1.0.3",
     "writable-window-method": "1.0.3"
-  }
+  },
+  "browser": "browser.js"
 }

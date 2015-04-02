@@ -1,7 +1,7 @@
 var bind = require('lodash-compat/function/bind');
 var test = require('tape');
 
-var XDomainRequest = require('../../lib/XDomainRequest/');
+var XDomainRequest = require('../../../lib/XDomainRequest/');
 
 test('xdr.send() throws when body is not a string', function(t) {
   var xdr = new XDomainRequest();

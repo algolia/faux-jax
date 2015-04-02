@@ -2,31 +2,27 @@
 
 [![Browser tests][browser-test-matrix]][browser-test-url]
 
-Intercept and respond to Ajax requests.
-
-Dedicated to testing Ajax-dependent JavaScript applications.
-
-We intercept both [XMLHttpRequest](https://xhr.spec.whatwg.org/) and
-[XDomainRequest](https://msdn.microsoft.com/en-us/library/ie/cc288060(v=vs.85).aspx)
-requests in [compatible environments](#how).
+Intercept and respond to:
+  - [XMLHttpRequest](https://xhr.spec.whatwg.org/)
+  - [XDomainRequest](https://msdn.microsoft.com/en-us/library/ie/cc288060(v=vs.85).aspx) in [compatible environments](#how)
+  - Node.js [http(s)](https://nodejs.org/api/http.html) module
 
 ```sh
 npm install faux-jax --save[-dev]
 ```
 
-# Example
-
+# Browser example
 
 ```js
 var fauxJax = require('faux-jax');
 
 fauxJax.install();
 
-doAJAX();
-respondToAJAX();
+doRequest();
+fauxJax.on('request', respond);
 
 // somewhere in your code:
-function doAJAX() {
+function doRequest() {
   var xhr = new XMLHttpRequest();
 
   xhr.open('POST', '/dawg');
@@ -36,31 +32,61 @@ function doAJAX() {
       YAW: 'dawg'
     })
   );
+  xhr.onload = function() {
+    console.log(xhr.status); // 200
+    console.log(xhr.response); // {zup: 'bro'}
+  }
 }
 
 // in a test file probably:
-function respondToAJAX() {
-  var request = fauxJax.requests[0];
-
+function respond(request) {
   request.respond(
-    // status
-    200, { // headers
-      'Content-Type': 'application/json'
+    200, { // status
+      'Content-Type': 'application/json' // headers
     },
     '{"zup": "bro?"}' //body
   );
+
+  fauxJax.restore();
+}
+```
+
+# Node.js example
+
+```js
+var http = require('http');
+var fauxJax = require('faux-jax');
+
+fauxJax.install();
+
+doRequest();
+fauJax.on('request', respond);
+
+function doRequest() {
+  http.request('http://www.google.com', function(res) {
+    console.log(res.statusCode); // 200
+
+    var chunks = [];
+    res.on('data', function(chunk) {
+      chunks.push(chunk);
+    });
+
+    res.on('end', function() {
+      console.log(Buffer.concat(chunks).toString(), 'Hello Node.js!');
+    });
+  }).end();
 }
 
-console.log(fauxJax.requests[0].response);
-// '{"zup": "bro?"}'
+function respond(request) {
+  request.respond(
+    200, { // status
+      'Content-Type': 'text/plain' // headers
+    },
+    'Hello Node.js!' //body
+  );
 
-console.log(fauxJax.requests[0].requestHeaders);
-// {'Content-Type': 'application/json'}
-
-fauxJax.restore();
-
-console.log(fauxJax.requests.length);
-// 0
+  fauxJax.restore();
+}
 ```
 
 # API
@@ -69,9 +95,13 @@ console.log(fauxJax.requests.length);
 
 Replace global `XMLHttpRequest` and `XDomainRequest` with mocks.
 
-## fauxJax.requests
+## fauxJax.on('request', cb)
 
-Populated with every `new XMLHttpRequest()` or `new XDomainRequest()`.
+fauxJax is an [EventEmitter](https://nodejs.org/api/events.html#events_class_events_eventemitter).
+
+Everytime a new request is made, you will get a `request` event.
+
+You can listen to it with `cb(request)`.
 
 All requests have the native properties/methods from [the spec](https://xhr.spec.whatwg.org/).
 
@@ -101,6 +131,13 @@ Sets back global `XMLHttpRequest` and `XDomainRequest` to native implementations
 
 Object containing [various support flags](./lib/support.js) for your tests, used internally by `faux-jax`.
 
+## Errors
+
+Errors will be emitted when:
+  - you try to `.install()` when already installed
+  - you try to `.restore()` without calling `.install()`
+  - **a request was intercepted while no listener set**
+
 # How
 
 tl;dr; We try to be as close as possible to the mocked native environment.
@@ -111,7 +148,13 @@ i.e. on Chrome, we do not intercept nor expose `XDomainRequest`.
 
 Also if the browser only implement [some parts](https://dvcs.w3.org/hg/xhr/raw-file/default/xhr-1/Overview.html) of `XMLHttpRequest`, we mimic it.
 
-# Development
+# Test
+
+```sh
+npm test
+```
+
+# Develop
 
 ```sh
 npm run dev
@@ -136,6 +179,8 @@ Inspiration for this module came from:
 - trek's [FakeXMLHttpRequest](https://github.com/trek/FakeXMLHttpRequest)
 
 Many thanks!
+
+Node.js version is using [moll/node-mitm](https://github.com/moll/node-mitm).
 
 [package-url]: https://npmjs.org/package/faux-jax
 [npm-version-svg]: http://vb.teelaun.ch/algolia/faux-jax.svg

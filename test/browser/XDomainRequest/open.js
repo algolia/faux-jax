@@ -1,7 +1,7 @@
 var bind = require('lodash-compat/function/bind');
 var forEach = require('lodash-compat/collection/forEach');
 var test = require('tape');
-var XDomainRequest = require('../../lib/XDomainRequest/');
+var XDomainRequest = require('../../../lib/XDomainRequest/');
 
 test('xdr.open() throws when missing parameters', function(t) {
   t.plan(1);

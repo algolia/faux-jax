@@ -2,8 +2,8 @@ var bind = require('lodash-compat/function/bind');
 var forEach = require('lodash-compat/collection/forEach');
 var test = require('tape');
 
-var support = require('../../lib/support');
-var XMLHttpRequest = require('../../lib/XMLHttpRequest/');
+var support = require('../../../lib/support');
+var XMLHttpRequest = require('../../../lib/XMLHttpRequest/');
 
 test('xhr.send() throws when state is not OPENED', function(t) {
   var xhr = new XMLHttpRequest();

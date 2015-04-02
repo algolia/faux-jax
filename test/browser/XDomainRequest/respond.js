@@ -1,6 +1,6 @@
 var test = require('tape');
 
-var XDomainRequest = require('../../lib/XDomainRequest/');
+var XDomainRequest = require('../../../lib/XDomainRequest/');
 
 test('xdr.respond() calls setResponseHeaders', function(t) {
   var headers = {'how': 'dy'};

@@ -1,7 +1,7 @@
 var bind = require('lodash-compat/function/bind');
 var test = require('tape');
 
-var XDomainRequest = require('../../lib/XDomainRequest/');
+var XDomainRequest = require('../../../lib/XDomainRequest/');
 
 test('xdr.setResponseHeaders() throws when request not sent', function(t) {
   var xdr = new XDomainRequest();

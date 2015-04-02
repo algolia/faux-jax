@@ -1,8 +1,8 @@
 var bind = require('lodash-compat/function/bind');
 var test = require('tape');
 
-var XMLHttpRequest = require('../../lib/XMLHttpRequest/');
-var support = require('../../lib/support');
+var XMLHttpRequest = require('../../../lib/XMLHttpRequest/');
+var support = require('../../../lib/support');
 
 test('xhr.setResponseBody() throws when body is not a String', function(t) {
   var xhr = new XMLHttpRequest();

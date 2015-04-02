@@ -22,7 +22,7 @@ domready(run);
 
 function run() {
   var test = require('tape');
-  var support = require('../lib/support');
+  var support = require('../../lib/support');
 
   var bulkRequire = require('bulk-require');
 
@@ -65,51 +65,76 @@ function run() {
     });
 
     test('fauxJax intercepts XMLHttpRequests', function(t) {
-      var fauxJax = require('../');
+      var fauxJax = require('../../');
 
       fauxJax.install();
       var xhr = new XMLHttpRequest();
       xhr.open('GET', '/fo1pf1');
       xhr.send();
-      xhr.respond(200, {}, 'WO!');
-      t.equal(1, fauxJax.requests.length, 'We intercepted one xhr');
-      t.equal('WO!', xhr.responseText, 'xhr.respond() call worked, body matches');
-      fauxJax.restore();
-      t.equal(0, fauxJax.requests.length, 'fauxJax.restore() resets fauxJax.requests to []');
-      t.end();
+
+      fauxJax.once('request', function(req) {
+        req.respond(200, {}, 'WO!');
+        t.equal('WO!', req.responseText, 'xhr.respond() call worked, body matches');
+        fauxJax.restore();
+        t.end();
+      });
     });
   }
 
   if (support.xdr) {
     test('fauxJax intercepts XDomainRequests', function(t) {
-      var fauxJax = require('../');
+      var fauxJax = require('../../');
 
       fauxJax.install();
       var xdr = new XDomainRequest();
       xdr.open('GET', '/fo1pf1');
       xdr.send();
-      xdr.respond(200, {}, 'WO!');
-      t.equal(1, fauxJax.requests.length, 'We intercepted one xdr');
-      t.equal('WO!', xdr.responseText, 'xdr.respond() call worked');
-      fauxJax.restore();
-      t.equal(0, fauxJax.requests.length, 'fauxJax.restore() resets fauxJax.requests to []');
-      t.end();
+
+      fauxJax.once('request', function(req) {
+        req.respond(200, {}, 'WOXDR!');
+        t.equal('WOXDR!', req.responseText, 'xdr.respond() call worked');
+        fauxJax.restore();
+        t.end();
+      });
     });
   }
 
   test('Calling `fauxJax.install()` twice throws', function(t) {
-    var bind = require('lodash-compat/function/bind');
-    var fauxJax = require('../');
+    var fauxJax = require('../../');
+
+    fauxJax.once('error', function(err) {
+      t.ok(err instanceof Error);
+      fauxJax.restore();
+      t.end();
+    });
 
     fauxJax.install();
+    fauxJax.install();
 
-    t.throws(
-      bind(fauxJax.install, fauxJax),
-      Error,
-      'Double `fauxJax.install()` call throws'
-    );
+  });
 
+  test('An unexpected request will trigger an error', function(t) {
+    var fauxJax = require('../../');
+    fauxJax.install();
+
+    // we expect an error being raised
+    fauxJax.once('error', function(err) {
+      t.ok(err instanceof Error);
+      fauxJax.restore();
+      t.end();
+    });
+
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', '/fo1pf1');
+    xhr.send();
+  });
+
+  test('Calling restore when not installed will emit an error', function(t) {
+    var fauxJax = require('../../');
+    fauxJax.once('error', function(err) {
+      t.ok(err instanceof Error);
+      t.end();
+    });
     fauxJax.restore();
-    t.end();
   });
 }

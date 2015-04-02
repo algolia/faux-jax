@@ -1,8 +1,8 @@
 var forEach = require('lodash-compat/collection/forEach');
 var test = require('tape');
 
-var XMLHttpRequest = require('../../lib/XMLHttpRequest/');
-var support = require('../../lib/support');
+var XMLHttpRequest = require('../../../lib/XMLHttpRequest/');
+var support = require('../../../lib/support');
 
 if (support.xhr.response) {
   test('xhr.abort() sets response to error when state > UNSENT and send() flag is true', function(t) {

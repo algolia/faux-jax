@@ -1,5 +1,5 @@
 var test = require('tape');
-var XDomainRequest = require('../../lib/XDomainRequest/');
+var XDomainRequest = require('../../../lib/XDomainRequest/');
 
 // https://msdn.microsoft.com/en-us/library/ie/cc288060(v=vs.85).aspx
 test('xdr.abort() cancels the current HTTP request', function(t) {
