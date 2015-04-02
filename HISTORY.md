@@ -1,4 +1,4 @@
-# UNRELEASED
+# 4.0.0-beta.1 (2015-04-02)
 
   * BREAKING CHANGE: faux-jax is now asyncrhonous by default, there's no more `.requests` property on the `fauxJax` object
     Now you need to: fauxJax.on('request', function(err, request) {})
