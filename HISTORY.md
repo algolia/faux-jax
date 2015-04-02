@@ -1,3 +1,10 @@
+# UNRELEASED
+
+  * BREAKING CHANGE: faux-jax is now asyncrhonous by default, there's no more `.requests` property on the `fauxJax` object
+    Now you need to: fauxJax.on('request', function(err, request) {})
+    This was done while adding the Node.js compatibility and also because asynchronous requests (XHRS, Node.js http) ARE A-S-Y-N-C-H-R-O-N-O-U-S
+  * FEATURE: Node.js compatibility, you can now intercept both on the browser and the server
+
 # 3.0.1 (2015-03-10)
 
   * upgrade lodash to 3.5.0

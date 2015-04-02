@@ -1,7 +1,7 @@
 var test = require('tape');
 
-var support = require('../../lib/support');
-var XDomainRequest = require('../../lib/XDomainRequest/');
+var support = require('../../../lib/support');
+var XDomainRequest = require('../../../lib/XDomainRequest/');
 
 test('timeout is initialized at -1', function(t) {
   var xdr = new XDomainRequest();

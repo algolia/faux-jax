@@ -1,8 +1,8 @@
 var bind = require('lodash-compat/function/bind');
 var test = require('tape');
 
-var support = require('../../lib/support');
-var XDomainRequest = require('../../lib/XDomainRequest/');
+var support = require('../../../lib/support');
+var XDomainRequest = require('../../../lib/XDomainRequest/');
 
 test('xdr.setResponseBody() throws when no body', function(t) {
   var xdr = new XDomainRequest();

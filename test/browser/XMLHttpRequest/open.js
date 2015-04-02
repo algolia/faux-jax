@@ -2,7 +2,7 @@ var bind = require('lodash-compat/function/bind');
 var forEach = require('lodash-compat/collection/forEach');
 var test = require('tape');
 
-var XMLHttpRequest = require('../../lib/XMLHttpRequest/');
+var XMLHttpRequest = require('../../../lib/XMLHttpRequest/');
 
 test('xhr.open() throws when method not a string', function(t) {
   var xhr = new XMLHttpRequest();
