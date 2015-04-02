@@ -60,7 +60,7 @@ var fauxJax = require('faux-jax');
 fauxJax.install();
 
 doRequest();
-fauJax.on('request', respond);
+fauxJax.on('request', respond);
 
 function doRequest() {
   http.request('http://www.google.com', function(res) {
