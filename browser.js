@@ -61,7 +61,7 @@ FauxJax.prototype.waitFor = function(n, callback) {
     fakeRequests.push(fakeRequest);
     if (fakeRequests.length === n) {
       fj.removeListener('request', waitFor);
-      callback(fakeRequests);
+      callback(null, fakeRequests);
     }
   }
 };

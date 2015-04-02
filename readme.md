@@ -107,6 +107,10 @@ All requests have the native properties/methods from [the spec](https://xhr.spec
 
 We also added a couple of handy properties/methods for you to ease testing.
 
+## fauxJax.waitFor(nbRequests, cb)
+
+Utility to "wait for n requests". Will call `cb(err, requests)`.
+
 ### request.requestMethod
 
 ### request.requestURL
