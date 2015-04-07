@@ -14,6 +14,7 @@ test('fauxJax intercepts http requests', function(t) {
     req.respond(200, {
       XLOL: 'test'
     }, 'Hello! HTTP!');
+    fauxJax.restore();
   });
 
   http.request('http://www.google.com', function(res) {

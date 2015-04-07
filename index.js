@@ -29,9 +29,11 @@ FauxJax.prototype.restore = function() {
     return;
   }
 
+  this._stopWaiting();
   this._installed = false;
   this._mitm.disable();
   this.removeAllListeners('request');
+  this.emit('restore');
 };
 
 FauxJax.prototype.waitFor = function(n, callback) {
@@ -57,7 +59,7 @@ FauxJax.prototype._newSocket = function(socket) {
 
 FauxJax.prototype._newRequest = function(req, res) {
   if (this.listeners('request').length === 0) {
-    this.emit('error', new Error('faux-jax: received an unexpected request: ' + req.url));
+    this.emit('error', new Error('faux-jax: received an unexpected request: ' + req.headers.host + req.url));
     return;
   }
 
@@ -72,13 +74,27 @@ FauxJax.prototype._newRequest = function(req, res) {
     requestURL: 'http://' + req.headers.host + req.url,
     requestHeaders: req.headers,
     requestBody: null,
-    res: res
+    res: res,
+    fj: fj
+  });
+
+  res.once('finish', function() {
+    fj._stopWaiting();
+    fakeRequest._clearTimeout();
   });
 
   req.on('end', function() {
     if (chunks.length > 0) {
       fakeRequest.requestBody = Buffer.concat(chunks).toString();
     }
+
+    // wait for a response, this simulates a timer waiting for a server response
+    // not needed in the browser but in nodejs, we need to have it otherwise the process
+    // will exits
+    fj._wait();
+
+    // this is used to mimick nodejs default READ timeout (2 minutes on Linux)
+    fakeRequest._setTimeout(2 * 60 * 1000);
 
     fj.emit('request', fakeRequest);
   });
@@ -88,7 +104,17 @@ FauxJax.prototype._newRequest = function(req, res) {
   });
 };
 
+FauxJax.prototype._wait = function() {
+  clearInterval(this._interval);
+  this._interval = setInterval(function noop() {}, 20000);
+};
+
+FauxJax.prototype._stopWaiting = function() {
+  clearInterval(this._interval);
+};
+
 function FakeRequest(opts) {
+  this._fj = opts.fj;
   this._res = opts.res;
   this.requestMethod = opts.requestMethod;
   this.requestURL = opts.requestURL;
@@ -97,9 +123,9 @@ function FakeRequest(opts) {
 }
 
 FakeRequest.prototype.setResponseHeaders = function(headers) {
-  var fj = this;
+  var fk = this;
   forEach(headers, function(headerValue, headerName) {
-    fj._res.setHeader(headerName, headerValue);
+    fk._res.setHeader(headerName, headerValue);
   });
 };
 
@@ -119,6 +145,20 @@ FakeRequest.prototype.respond = function(statusCode, headers, body) {
   }
 
   this._res.socket.emit('end');
+  this._res.end();
+};
+
+FakeRequest.prototype._setTimeout = function(ms) {
+  this._timeout = setTimeout(this._timedout.bind(this), ms);
+  this._fj.once('restore', this._clearTimeout.bind(this));
+};
+
+FakeRequest.prototype._timedout = function() {
+  this.emit('error', new Error('faux-jax: socket hang up'));
+};
+
+FakeRequest.prototype._clearTimeout = function() {
+  clearTimeout(this._timeout);
 };
 
 module.exports = new FauxJax();
