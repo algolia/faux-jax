@@ -66,12 +66,14 @@ FauxJax.prototype._newRequest = function(req, res) {
   var fj = this;
   var chunks = [];
 
+  var protocol = req.socket.encrypted === true ? 'https:' : 'http:';
+
   var fakeRequest = new FakeRequest({
     requestMethod: req.method,
     // cannot detect http from https for now,
     // https://github.com/moll/node-mitm/issues/10
     // so we default to http
-    requestURL: 'http://' + req.headers.host + req.url,
+    requestURL: protocol + '//' + req.headers.host + req.url,
     requestHeaders: req.headers,
     requestBody: null,
     res: res,

@@ -1,3 +1,7 @@
+# UNRELEASED
+  
+  * handle https: protocol in node.js
+
 # 4.0.0-beta.2 (2015-04-07)
   
   * keep the event loop alive in Node.js

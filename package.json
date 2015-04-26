@@ -41,7 +41,7 @@
     "bowser": "0.7.2",
     "lodash": "3.6.0",
     "lodash-compat": "3.5.0",
-    "mitm": "1.0.3",
+    "mitm": "1.1.0",
     "writable-window-method": "1.0.3"
   },
   "browser": "browser.js"
