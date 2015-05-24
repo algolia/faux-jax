@@ -1,5 +1,6 @@
-# UNRELEASED
+# 4.0.0 (2015-05-24)
   
+  * event driven and nodejs support out of beta: it works
   * handle https: protocol in node.js
 
 # 4.0.0-beta.2 (2015-04-07)
