@@ -36,7 +36,6 @@ function run() {
 
   if (support.xhr) {
     test('nothing gets intercepted by default', function(t) {
-
       t.plan(2);
       var xhr = new XMLHttpRequest();
       xhr.open('GET', location.pathname);
@@ -110,7 +109,6 @@ function run() {
 
     fauxJax.install();
     fauxJax.install();
-
   });
 
   test('An unexpected request will trigger an error', function(t) {

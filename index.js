@@ -18,7 +18,8 @@ FauxJax.prototype.install = function() {
 
   this._installed = true;
 
-  this._mitm = Mitm();
+  this._mitm = new Mitm();
+  this._mitm.enable();
   this._mitm.on('request', this._newRequest.bind(this));
   this._mitm.on('connect', this._newSocket.bind(this));
 };
