@@ -1,3 +1,7 @@
+# 4.1.0 (2015-09-01)
+
+  * fix: iojs fix by upgrading mitm
+
 # 4.0.0 (2015-05-24)
   
   * event driven and nodejs support out of beta: it works
