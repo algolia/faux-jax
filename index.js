@@ -1,5 +1,6 @@
 var EventEmitter = require('events').EventEmitter;
 var inherits = require('util').inherits;
+var zlib = require('zlib');
 
 var forEach = require('lodash').forEach;
 var Mitm = require('mitm');
@@ -10,7 +11,11 @@ function FauxJax() {
 
 inherits(FauxJax, EventEmitter);
 
-FauxJax.prototype.install = function() {
+FauxJax.prototype.install = function(opts) {
+  if (opts && opts.gzip) {
+    this._gzip = opts.gzip;
+  }
+
   if (this._installed) {
     this.emit('error', new Error('faux-jax: Cannot call `install()` twice. Did you forgot to call `restore()`?'));
     return;
@@ -78,7 +83,8 @@ FauxJax.prototype._newRequest = function(req, res) {
     requestHeaders: req.headers,
     requestBody: null,
     res: res,
-    fj: fj
+    fj: fj,
+    gzip: this._gzip
   });
 
   res.once('finish', function() {
@@ -123,6 +129,7 @@ function FakeRequest(opts) {
   this.requestURL = opts.requestURL;
   this.requestHeaders = opts.requestHeaders;
   this.requestBody = opts.requestBody;
+  this._gzip = opts.gzip;
 }
 
 FakeRequest.prototype.setResponseHeaders = function(headers) {
@@ -133,10 +140,18 @@ FakeRequest.prototype.setResponseHeaders = function(headers) {
 };
 
 FakeRequest.prototype.setResponseBody = function(body) {
+  if (this._gzip === true) {
+    body = zlib.gzipSync(body);
+  }
+
   this._res.write(body);
 };
 
 FakeRequest.prototype.respond = function(statusCode, headers, body) {
+  if (this._gzip === true) {
+    this.setResponseHeaders({'content-encoding': 'gzip'});
+  }
+
   if (headers) {
     this.setResponseHeaders(headers);
   }
