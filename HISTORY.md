@@ -1,3 +1,7 @@
+# 4.2.0 (2015-12-06)
+
+  * feat(res): provide gzip option in install({gzip:true})
+
 # 4.1.0 (2015-09-01)
 
   * fix: iojs fix by upgrading mitm
