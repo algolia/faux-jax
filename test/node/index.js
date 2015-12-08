@@ -63,3 +63,33 @@ test('fauxJax intercepts https requests', function(t) {
     });
   }).end();
 });
+
+test('fauxJax supports gzip', function(t) {
+  var fauxJax = require('../../');
+  var https = require('https');
+
+  fauxJax.install({gzip: true});
+
+  fauxJax.once('request', function(req) {
+    req.respond(200, {
+      XLOL: 'test'
+    }, 'Hello! HTTP!');
+    fauxJax.restore();
+  });
+
+  https.request('https://www.google.com', function(res) {
+    var zlib = require('zlib');
+    var chunks = [];
+    res
+    .pipe(zlib.createUnzip())
+    .on('data', function(chunk) {
+      chunks.push(chunk);
+    })
+    .on('end', function() {
+      t.equal(res.statusCode, 200);
+      t.equal(res.headers.xlol, 'test');
+      t.equal(Buffer.concat(chunks).toString(), 'Hello! HTTP!');
+      t.end();
+    });
+  }).end();
+});

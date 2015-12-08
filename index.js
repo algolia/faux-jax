@@ -139,15 +139,34 @@ FakeRequest.prototype.setResponseHeaders = function(headers) {
   });
 };
 
-FakeRequest.prototype.setResponseBody = function(body) {
+FakeRequest.prototype.setResponseBody = function(body, cb) {
+  var res = this._res;
+
   if (this._gzip === true) {
-    body = zlib.gzipSync(body);
+    zlib.gzip(body, write);
+    return;
   }
 
-  this._res.write(body);
+  process.nextTick(function() {
+    write(null, body);
+  });
+
+  function write(err, bodyToWrite) {
+    if (err) {
+      throw err;
+    }
+
+    if (bodyToWrite !== undefined) {
+      res.write(bodyToWrite);
+    }
+
+    cb();
+  }
 };
 
 FakeRequest.prototype.respond = function(statusCode, headers, body) {
+  var res = this._res;
+
   if (this._gzip === true) {
     this.setResponseHeaders({'content-encoding': 'gzip'});
   }
@@ -159,11 +178,16 @@ FakeRequest.prototype.respond = function(statusCode, headers, body) {
   this._res.statusCode = statusCode;
 
   if (body !== undefined) {
-    this.setResponseBody(body);
+    this.setResponseBody(body, end);
+    return;
   }
 
-  this._res.socket.emit('end');
-  this._res.end();
+  process.nextTick(end);
+
+  function end() {
+    res.socket.emit('end');
+    res.end();
+  }
 };
 
 FakeRequest.prototype._setTimeout = function(ms) {

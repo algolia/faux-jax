@@ -91,9 +91,11 @@ function respond(request) {
 
 # API
 
-## fauxJax.install()
+## fauxJax.install([opts])
 
 Replace global `XMLHttpRequest` and `XDomainRequest` with mocks.
+
+* `opts.gzip`: boolean. Set to true in nodejs to receive gzipped responses.
 
 ## fauxJax.on('request', cb)
 
@@ -121,11 +123,11 @@ Always `{}` with `XDomainRequest`.
 
 ### request.requestBody
 
-### request.respond(status, [headers], [body])
+### request.respond(status[, headers, body])
 
 ### request.setResponseHeaders(headers)
 
-### request.setResponseBody(body)
+### request.setResponseBody(body[, cb])
 
 ## fauxJax.restore()
 
