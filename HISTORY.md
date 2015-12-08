@@ -1,3 +1,7 @@
+# 4.2.1 (2015-12-08)
+
+  * fix(0.10): fix gzip option in node 0.10
+
 # 4.2.0 (2015-12-06)
 
   * feat(res): provide gzip option in install({gzip:true})
