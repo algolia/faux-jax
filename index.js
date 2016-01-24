@@ -185,8 +185,8 @@ FakeRequest.prototype.respond = function(statusCode, headers, body) {
   process.nextTick(end);
 
   function end() {
-    res.socket.emit('end');
     res.end();
+    res.socket.emit('end');
   }
 };
 
