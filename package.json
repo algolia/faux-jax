@@ -1,6 +1,6 @@
 {
   "name": "faux-jax",
-  "version": "4.2.1",
+  "version": "4.2.2",
   "description": "Intercept and respond to requests in the browser (XMLHttpRequest, XDomainRequest) and Node.js (http(s) module)",
   "main": "index.js",
   "scripts": {

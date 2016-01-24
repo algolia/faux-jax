@@ -1,3 +1,7 @@
+# UNRELEASED
+
+* fix(nodejs): emit end after ending response, not before fixes #11
+
 # 4.2.1 (2015-12-08)
 
   * fix(0.10): fix gzip option in node 0.10
