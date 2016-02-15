@@ -80,23 +80,35 @@ FauxJax.prototype.support = support;
 var fauxJax = new FauxJax();
 
 function FakeXHR() {
-  var x = this;
   XMLHttpRequestMock.call(this);
-  process.nextTick(function() {
-    fauxJax._newRequest(x);
-  });
 }
 
 inherits(FakeXHR, XMLHttpRequestMock);
 
+FakeXHR.prototype.send = function() {
+  var req = this;
+  XMLHttpRequestMock.prototype.send.apply(req, arguments);
+  if (req.async) {
+    setTimeout(function() {
+      fauxJax._newRequest(req);
+    });
+  } else {
+    fauxJax._newRequest(req);
+  }
+};
+
 function FakeXDR() {
-  var x = this;
   XDomainRequestMock.call(this);
-  process.nextTick(function() {
-    fauxJax._newRequest(x);
-  });
 }
 
 inherits(FakeXDR, XDomainRequestMock);
+
+FakeXDR.prototype.send = function() {
+  var req = this;
+  XDomainRequestMock.prototype.send.apply(req, arguments);
+  setTimeout(function() {
+    fauxJax._newRequest(req);
+  });
+};
 
 module.exports = fauxJax;
