@@ -186,7 +186,11 @@ FakeRequest.prototype.respond = function(statusCode, headers, body) {
 
   function end() {
     res.end();
-    res.socket.emit('end');
+    try {
+      res.socket.emit('end');
+    } catch (e) {
+      // empty on purpose, can break in old node.js versions
+    }
   }
 };
 
