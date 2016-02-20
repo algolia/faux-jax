@@ -1,6 +1,8 @@
-# UNRELEASED
+# 5.0.0 (2016-02-20)
 
 * fix(nodejs): emit end after ending response, not before fixes #11
+* fix(XHR spec): handle sync XHRS
+* fix(XHR spec): new request event is now only on send call, always async if no sync flag
 
 # 4.2.1 (2015-12-08)
 
