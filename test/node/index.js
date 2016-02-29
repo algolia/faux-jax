@@ -32,6 +32,27 @@ test('fauxJax intercepts http requests', function(t) {
   }).end();
 });
 
+test('does not leak listeners', function(t) {
+  var fauxJax = require('../../');
+  var http = require('http');
+
+  fauxJax.install();
+
+  fauxJax.once('request', function(req) {
+    t.equal(fauxJax.listeners('restore').length, 1);
+    req.respond(200, {}, '.');
+  });
+
+  http.request('http://www.google.com', function(res) {
+    res.on('data', function() { });
+    res.on('end', function() {
+      t.equal(fauxJax.listeners('restore').length, 0);
+      fauxJax.restore();
+      t.end();
+    });
+  }).end();
+});
+
 test('fauxJax intercepts https requests', function(t) {
   var fauxJax = require('../../');
   var https = require('https');

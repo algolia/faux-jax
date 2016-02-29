@@ -166,6 +166,7 @@ FakeRequest.prototype.setResponseBody = function(body, cb) {
 
 FakeRequest.prototype.respond = function(statusCode, headers, body) {
   var res = this._res;
+  var fj = this._fj;
 
   if (this._gzip === true) {
     this.setResponseHeaders({'content-encoding': 'gzip'});
@@ -186,6 +187,7 @@ FakeRequest.prototype.respond = function(statusCode, headers, body) {
 
   function end() {
     res.end();
+    fj.emit('response-end');
     try {
       res.socket.emit('end');
     } catch (e) {
@@ -196,7 +198,9 @@ FakeRequest.prototype.respond = function(statusCode, headers, body) {
 
 FakeRequest.prototype._setTimeout = function(ms) {
   this._timeout = setTimeout(this._timedout.bind(this), ms);
-  this._fj.once('restore', this._clearTimeout.bind(this));
+  this._timeoutListener = this._clearTimeout.bind(this);
+  this._fj.once('restore', this._timeoutListener);
+  this._fj.once('response-end', this._timeoutListener);
 };
 
 FakeRequest.prototype._timedout = function() {
@@ -205,6 +209,8 @@ FakeRequest.prototype._timedout = function() {
 
 FakeRequest.prototype._clearTimeout = function() {
   clearTimeout(this._timeout);
+  this._fj.removeListener('restore', this._timeoutListener);
+  this._fj.removeListener('response-end', this._timeoutListener);
 };
 
 module.exports = new FauxJax();
