@@ -1,3 +1,7 @@
+# 5.0.1 (2016-02-29)
+
+* fix(listeners): do not leak listeners on response end
+
 # 5.0.0 (2016-02-20)
 
 * fix(nodejs): emit end after ending response, not before fixes #11
