@@ -1,4 +1,4 @@
-# faux-jax <sup>[![Version Badge][npm-version-svg]][package-url]</sup> [![Build Status][travis-svg]][travis-url] [![License][license-image]][license-url] [![Downloads][downloads-image]][downloads-url]
+# faux-jax [![Version Badge][npm-version-svg]][package-url] [![Build Status][travis-svg]][travis-url] [![License][license-image]][license-url] [![Downloads][downloads-image]][downloads-url]
 
 [![Browser tests][browser-test-matrix]][browser-test-url]
 
@@ -189,7 +189,7 @@ Many thanks!
 Node.js version is using [moll/node-mitm](https://github.com/moll/node-mitm).
 
 [package-url]: https://npmjs.org/package/faux-jax
-[npm-version-svg]: http://vb.teelaun.ch/algolia/faux-jax.svg
+[npm-version-svg]: https://img.shields.io/npm/v/faux-jax.svg?style=flat-square
 [travis-svg]: https://img.shields.io/travis/algolia/faux-jax/master.svg?style=flat-square
 [travis-url]: https://travis-ci.org/algolia/faux-jax
 [license-image]: http://img.shields.io/npm/l/faux-jax.svg?style=flat-square
@@ -198,5 +198,3 @@ Node.js version is using [moll/node-mitm](https://github.com/moll/node-mitm).
 [downloads-url]: http://npm-stat.com/charts.html?package=faux-jax
 [browser-test-matrix]: https://saucelabs.com/browser-matrix/os-algolia-faux-jax.svg
 [browser-test-url]: https://saucelabs.com/u/os-algolia-faux-jax
-
-
