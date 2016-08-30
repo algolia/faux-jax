@@ -32,6 +32,7 @@
     "eslint": "1.3.1",
     "eslint-config-airbnb": "0.0.8",
     "eslint-config-algolia": "2.1.2",
+    "mitm-algolia": "^1.3.0-algolia-patch.0",
     "phantomjs": "^2.1.7",
     "sinon": "^1.17.5",
     "tap-spec": "^4.1.1",
