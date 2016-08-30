@@ -1,4 +1,4 @@
-# patch (2016-08-30)
+# 5.0.2 (2016-08-30)
 
 # 5.0.1 (2016-02-29)
 
@@ -23,12 +23,12 @@
   * fix: iojs fix by upgrading mitm
 
 # 4.0.0 (2015-05-24)
-  
+
   * event driven and nodejs support out of beta: it works
   * handle https: protocol in node.js
 
 # 4.0.0-beta.2 (2015-04-07)
-  
+
   * keep the event loop alive in Node.js
 
 # 4.0.0-beta.1 (2015-04-02)
@@ -44,7 +44,7 @@
   * upgrade writable-window-method to 1.0.3
 
 # 3.0.0 (2015-03-07)
-  
+
   * fix `getAllResponseHeaders()` implementation, returns a string, not an array
 
 # 2.0.0 (2015-03-06)
@@ -55,13 +55,13 @@
 # 1.7.1 (2015-03-04)
 
   * throw when calling `fauxJax.install()` twice
-  
+
 # 1.7.0 (2015-03-04)
 
   * do not allow `.respond()` `.setResponseHeaders()` `.setResponseBody` when request timeout or error
 
 # 1.6.0 (2015-02-26)
-  
+
   * enhance XDomainRequest implem
   * use writable-window-method
 
@@ -79,13 +79,13 @@
   * do not force a charset if none set
 
 # 1.3.0 (2015-02-16)
-  
+
   * do not duplicate content-type header if case does not matches
   * setRequestHeader() compare header names in a case insensitive
   * setRequestHeader() appends header values
 
 # 1.2.0 (2015-02-14)
-  
+
   * better progress events
   * more feature detection, closer to native environment
 
@@ -109,4 +109,3 @@
 # 1.0.0 (2015-02-11)
 
   * initial
-
