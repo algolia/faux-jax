@@ -26,24 +26,24 @@
   "license": "MIT",
   "repository": "algolia/faux-jax",
   "devDependencies": {
-    "bulk-require": "0.2.1",
-    "bulkify": "1.1.1",
+    "bulk-require": "^1.0.0",
+    "bulkify": "^1.4.2",
     "domready": "0.3.0",
     "eslint": "1.3.1",
     "eslint-config-airbnb": "0.0.8",
     "eslint-config-algolia": "2.1.2",
-    "phantomjs": "1.9.18",
-    "sinon": "1.16.1",
-    "tap-spec": "4.1.0",
-    "tape": "4.2.0",
-    "zuul": "3.4.0",
-    "zuul-ngrok": "3.0.0"
+    "phantomjs": "^2.1.7",
+    "sinon": "^1.17.5",
+    "tap-spec": "^4.1.1",
+    "tape": "^4.6.0",
+    "zuul": "^3.11.0",
+    "zuul-ngrok": "^4.0.0"
   },
   "dependencies": {
-    "bowser": "1.0.0",
+    "bowser": "^1.4.5",
     "lodash": "3.10.1",
-    "lodash-compat": "3.10.1",
-    "mitm": "1.2.0",
+    "lodash-compat": "^3.10.2",
+    "mitm": "^1.3.0",
     "writable-window-method": "1.0.3"
   },
   "browser": "browser.js"
