@@ -17,7 +17,7 @@ test('xhr.open() throws when method unknown', function(t) {
 });
 
 test('xhr.open() accepts uppercase methods', function(t) {
-  var methods = ['GET', 'HEAD', 'POST', 'DELETE', 'OPTIONS', 'PUT', 'CONNECT', 'TRACE', 'TRACK'];
+  var methods = ['GET', 'HEAD', 'POST', 'PATCH', 'DELETE', 'OPTIONS', 'PUT', 'CONNECT', 'TRACE', 'TRACK'];
   t.plan(methods.length);
 
   forEach(methods, function(method) {
@@ -27,7 +27,7 @@ test('xhr.open() accepts uppercase methods', function(t) {
 });
 
 test('xhr.open() normalizes lowercase methods', function(t) {
-  var methods = ['get', 'head', 'post', 'delete', 'options', 'put'];
+  var methods = ['get', 'head', 'post', 'patch', 'delete', 'options', 'put'];
   t.plan(methods.length * 2);
 
   forEach(methods, function(method) {
