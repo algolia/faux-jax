@@ -3,7 +3,7 @@ var inherits = require('util').inherits;
 var zlib = require('zlib');
 
 var forEach = require('lodash').forEach;
-var Mitm = require('mitm-algolia');
+var Mitm = require('mitm');
 
 function FauxJax() {
   this._installed = false;
