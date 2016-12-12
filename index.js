@@ -157,7 +157,8 @@ FakeRequest.prototype.setResponseBody = function(body, cb) {
     }
 
     if (bodyToWrite !== undefined) {
-      res.write(bodyToWrite);
+      res.write(bodyToWrite, cb);
+      return;
     }
 
     cb();
@@ -168,6 +169,8 @@ FakeRequest.prototype.respond = function(statusCode, headers, body) {
   var res = this._res;
   var fj = this._fj;
 
+  res.statusCode = statusCode;
+
   if (this._gzip === true) {
     this.setResponseHeaders({'content-encoding': 'gzip'});
   }
@@ -175,8 +178,6 @@ FakeRequest.prototype.respond = function(statusCode, headers, body) {
   if (headers) {
     this.setResponseHeaders(headers);
   }
-
-  this._res.statusCode = statusCode;
 
   if (body !== undefined) {
     this.setResponseBody(body, end);
