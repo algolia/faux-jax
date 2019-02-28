@@ -1,3 +1,5 @@
+**MESSAGE FROM MAINTAINERS**: This module is not maintained, you can fork it still or there are maybe better solutions nowadays.
+
 # faux-jax [![Version Badge][npm-version-svg]][package-url] [![Build Status][travis-svg]][travis-url] [![License][license-image]][license-url] [![Downloads][downloads-image]][downloads-url]
 
 [![Browser tests][browser-test-matrix]][browser-test-url]
